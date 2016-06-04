@@ -1,0 +1,3878 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Python by GYgavin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Python</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/GYgavin/python" class="btn">View on GitHub</a>
+      <a href="https://github.com/GYgavin/python/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/GYgavin/python/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p>PYTHON 简明教程
+<a href="https://github.com/author" class="user-mention">@author</a> 刘振伟
+<a href="https://github.com/QQ" class="user-mention">@QQ</a> 570962906
+PYTHON 创始人: Guido van Rossum, 在 Python 界被誉为仁慈的独裁者。
+借鉴了 unix shell ,c 的特点
+1989 圣诞期间发布, python 已经有 20 年的历史了,比 java 早很多, java 第一个版本才是 1994 年发布的。
+2000 年 10.16 python2.0 发布,此时 python 才真正成为一个功能完善,非常好用的语言
+2008 年 12 月 3 日, python3 发布,相比与 python2 而言,改变比较大,不兼容 python2. 目前是两个版本共存的
+python 的定位:
+解释型的通用语言 ( 操作系统内核等没有解释器存在,是不能在内核或硬件上使用 python 的 )
+优雅 明确 简单,在 Python 中做某件事有且只有一个最优解
+使用范围: web (国内的豆瓣,知乎等等) , 自动化脚本,数据分析 (spark 上原生支持 Python) 等
+python 的实现与版本:
+通常所说的 python 是由 C 语开发,是官方的版本
+jython 是由 java 写的,运行在 jvm 上 , 可以与现有的 JAVA 库无缝的兼容
+IronPython 是运行在 .net 平台上的 , 兼容 .net 库
+PyPy 是用 python 写成的 python( 在科学计算上较广泛使用 ) ,在 python 中有一个很大的 ” 缺陷 “ , GIL 全局库解释器锁, PyPy 就是为了解决这个问题而存在
+的。
+大版本之间不向前兼容 (python3 与 python2)
+本次课以 python2.7 来讲 , 这也是目前使用最为广泛的版本
+安装 PYENV
+大多数 linux 上已经安装了 python 环境,但不同的发行版 linux 安装的 python 版本会有不同 ,pyenv 管理多版本的 python.
+我们工作上有时候需要使用到多版本的 python,
+yum -y install gcc gcc-c++ make git patch openssl_devel zlib-devel readline-devel sqlite-devel bzip2-devel
+安装 pyenv:
+作者已经给提供了一个安装脚本,下载下来直接运行即可:
+<a href="https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer">https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer</a>
+配置环境变量:
+[root@yeahmonitor ~]# cat /etc/profile.d/pyenv.sh
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+[root@yeahmonitor ~]# . /etc/profile
+使用 pyenv 安装 python2.7.5
+[root@yeahmonitor ~]# pyenv install 2.7.5</p>
+
+<h1>
+<a id="rhel7-和-centos-7-中系统自带的-python-就是-275-的版本" class="anchor" href="#rhel7-%E5%92%8C-centos-7-%E4%B8%AD%E7%B3%BB%E7%BB%9F%E8%87%AA%E5%B8%A6%E7%9A%84-python-%E5%B0%B1%E6%98%AF-275-%E7%9A%84%E7%89%88%E6%9C%AC" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rhel7 和 centos 7 中系统自带的 python 就是 2.7.5 的版本</h1>
+
+<p>[root@yeahmonitor ~]# pyenv install pypy-1.9</p>
+
+<h1>
+<a id="安装-pypy-19" class="anchor" href="#%E5%AE%89%E8%A3%85-pypy-19" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>安装 pypy-1.9</h1>
+
+<p>卸载 pyenv uninstall xxx
+告诉 pyenv 当前目录使用哪个版本的 python
+[root@yeahmonitor python]# pyenv local 2.7.5
+[root@yeahmonitor python]# pyenv rehash# 重建环境变量 , 告诉 pyenv 当前使用该版本
+[root@yeahmonitor python]# pyenv version
+2.7.5 (set by /root/python/.python-version)</p>
+
+<h1>
+<a id="其他目录下还是使用的是系统自带的版本--这里是-7-的-linux-所以全是-275" class="anchor" href="#%E5%85%B6%E4%BB%96%E7%9B%AE%E5%BD%95%E4%B8%8B%E8%BF%98%E6%98%AF%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AF%E7%B3%BB%E7%BB%9F%E8%87%AA%E5%B8%A6%E7%9A%84%E7%89%88%E6%9C%AC--%E8%BF%99%E9%87%8C%E6%98%AF-7-%E7%9A%84-linux-%E6%89%80%E4%BB%A5%E5%85%A8%E6%98%AF-275" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>其他目录下还是使用的是系统自带的版本 , 这里是 7 的 linux 所以全是 2.7.5</h1>
+
+<p>管理全局的 python : pyenv global 2.7.5
+打开一个 python shell:[root@yeahmonitor python]# python
+Python 2.7.5 (default, Jun 17 2014, 18:11:42)
+[GCC 4.8.2 20140120 (Red Hat 4.8.2-16)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.</p>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<p>安装 easy_install,
+wget <a href="https://bootstrap.pypa.io/ez_setup.py">https://bootstrap.pypa.io/ez_setup.py</a> -O - | python
+Ipython 是对 python shell 的增强 ( 自动补全,更清晰的查看文档等 ) :
+[root@yeahmonitor python]# easy_install ipython
+打开 ipython shell:
+ipython
+变量命名:
+(下划线或字母) + (任意数目的字母、数字或下划线)
+变量名必须以下划线或字母开头,而后面接任意数目的字母、数字或下划线。
+区分大小写: SPAM 和 spam 不同
+禁止使用保留字
+python 基础
+最初步骤
+使用交互式 python
+挑选一个合适的编辑器或者 IDE
+使用源文件
+可执行的 python
+unicode 支持
+简单的示例:
+[root@yeahmonitor python]# cat hello.py
+print "hello world"
+[root@yeahmonitor python]# python hello.py
+hello world
+从第一行往下依次执行代码
+示例二:以可执行文件运行
+[root@yeahmonitor python]# cat hello.py</p>
+
+<h1>
+<a id="usrbinenv-python" class="anchor" href="#usrbinenv-python" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>print "hello world"
+[root@yeahmonitor python]# chmod +x hello.py
+[root@yeahmonitor python]# ./hello.py
+hello world
+输出中文:
+[root@yeahmonitor python]# cat hello.py</p>
+
+<h1>
+<a id="usrbinenv-python-1" class="anchor" href="#usrbinenv-python-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>print "hello world"
+print " 你好,世界 !"
+[root@yeahmonitor python]# ./hello.py
+File "./hello.py", line 4
+SyntaxError: Non-ASCII character '\xe4' in file ./hello.py on line 4, but no encoding declared; see <a href="http://www.python.org/peps/pep-0263.html">http://www.python.org/peps/pep-0263.html</a> for details</p>
+
+<h1>
+<a id="显式的指定编码" class="anchor" href="#%E6%98%BE%E5%BC%8F%E7%9A%84%E6%8C%87%E5%AE%9A%E7%BC%96%E7%A0%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>显式的指定编码:</h1>
+
+<p>[root@yeahmonitor python]# cat hello.py</p>
+
+<h1>
+<a id="usrbinenv-python-2" class="anchor" href="#usrbinenv-python-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<h1>
+<a id="codingutf-8--显式指定编码为-utf-8" class="anchor" href="#codingutf-8--%E6%98%BE%E5%BC%8F%E6%8C%87%E5%AE%9A%E7%BC%96%E7%A0%81%E4%B8%BA-utf-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>coding=utf-8 # 显式指定编码为 utf-8</h1>
+
+<p>print "hello world"
+print " 你好,世界 !"
+[root@yeahmonitor python]# ./hello.py
+hello world
+你好,世界 !关于脚本中的第一行内容 :</p>
+
+<h1>
+<a id="usrbinpython-这种写法表示直接引用系统的默认的-python-版本这样的话-python-程序移植到其他机器上可能运行的时候有问题因为别人系统默" class="anchor" href="#usrbinpython-%E8%BF%99%E7%A7%8D%E5%86%99%E6%B3%95%E8%A1%A8%E7%A4%BA%E7%9B%B4%E6%8E%A5%E5%BC%95%E7%94%A8%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%BB%98%E8%AE%A4%E7%9A%84-python-%E7%89%88%E6%9C%AC%E8%BF%99%E6%A0%B7%E7%9A%84%E8%AF%9D-python-%E7%A8%8B%E5%BA%8F%E7%A7%BB%E6%A4%8D%E5%88%B0%E5%85%B6%E4%BB%96%E6%9C%BA%E5%99%A8%E4%B8%8A%E5%8F%AF%E8%83%BD%E8%BF%90%E8%A1%8C%E7%9A%84%E6%97%B6%E5%80%99%E6%9C%89%E9%97%AE%E9%A2%98%E5%9B%A0%E4%B8%BA%E5%88%AB%E4%BA%BA%E7%B3%BB%E7%BB%9F%E9%BB%98" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/python 这种写法表示直接引用系统的默认的 Python 版本,这样的话 python 程序移植到其他机器上可能运行的时候有问题,因为别人系统默</h1>
+
+<p>认的 Python 版本与你预期的并不一致。</p>
+
+<h1>
+<a id="usrbinenv-python-这种写法表示引用环境变量里面自定义的-python-版本具有较强的可移植性推荐这种写法" class="anchor" href="#usrbinenv-python-%E8%BF%99%E7%A7%8D%E5%86%99%E6%B3%95%E8%A1%A8%E7%A4%BA%E5%BC%95%E7%94%A8%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%87%8C%E9%9D%A2%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84-python-%E7%89%88%E6%9C%AC%E5%85%B7%E6%9C%89%E8%BE%83%E5%BC%BA%E7%9A%84%E5%8F%AF%E7%A7%BB%E6%A4%8D%E6%80%A7%E6%8E%A8%E8%8D%90%E8%BF%99%E7%A7%8D%E5%86%99%E6%B3%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python 这种写法表示,引用环境变量里面自定义的 Python 版本,具有较强的可移植性,推荐这种写法。</h1>
+
+<p>测试不写第一行内容是否可行。。。。在什么情况下正常运行,在什么情况下会报错,结合 shell 来讲。
+基本概念
+字面常量 ( 看到的是什么样的 ,就是什么样 ), 如 "hello world"
+单独出现的数字,字符串等
+1,"abc",['a',1]
+字面常量是解释器里面的一块内存
+单独的字面常量是无意义的 , 当一块内存没有变量在引用的时候会被自动释放。
+变量
+变量是一个指向一段内存的符号
+python 里所有的变量都是引用 ,
+变量命名规范(由数字,字母,下划线组成 , 不能以数字开头 , 关键字不能作为变量名 )
+数据类型
+python 是一种强类型的动态语言,每一个数据都有一个类型,不同类型之间的数据不能做运算,如数字和字符不能相加 . 所谓的动态语言是指,数据类型可以
+在运算时改变 .
+v1 = 1
+type(v1)
+
+v1 = "string"
+type(v1)
+</p>
+
+<h1>
+<a id="在-c-中是绝对不能这么做的" class="anchor" href="#%E5%9C%A8-c-%E4%B8%AD%E6%98%AF%E7%BB%9D%E5%AF%B9%E4%B8%8D%E8%83%BD%E8%BF%99%E4%B9%88%E5%81%9A%E7%9A%84" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>在 C 中是绝对不能这么做的</h1>
+
+<h1>
+<a id="不同类型的数据不能做运算" class="anchor" href="#%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E8%83%BD%E5%81%9A%E8%BF%90%E7%AE%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>不同类型的数据不能做运算</h1>
+
+<p>v1 = "string"
+type(v1)
+
+v2 = 1
+v1+v2
+Traceback (most recent call last):
+File "", line 1, in 
+TypeError: cannot concatenate 'str' and 'int' objects
+数据类型,不同的数据类型的二进制是不一样的,为了能让解释器知道这段内存是什么,所以要定义数据类型,也就是规范了数据存放的二进制格式。
+在 python 中分为数字类型和字符串类型,数字又分为:整型 , 长整型和浮点型
+a = 1.1
+type(a)
+</p>
+
+<h1>
+<a id="字符串连接" class="anchor" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>字符串连接</h1>
+
+<p>s1 = 'hello'
+s2 = ' world'
+s = s1 + s2
+s
+'hello world'
+类型转化, &gt;&gt;&gt; i = 1 &gt;&gt;&gt; float(i) 1.0 #float 要比 int 精度要高,从低精度向高精度转换是没有数据损失的,从高精度转向低精度会有损失。
+对象,在 python 中万物皆对象,所有的都是对象
+运算符与表达式
+算术运算符 + * / ** // % 位操作运算符 &lt;&lt; &gt;&gt; &amp; | ^ ~ 比较运算符 &lt; &lt;= &gt;= == &gt; != 逻辑运算符 and or not 赋值运算符 = 其他运算符
+数学运算符,
+10 /3 # 两个整型相除的时候,等到的还是整型 , 会有精度损失
+3</p>
+
+<h1>
+<a id="将其中一个转换为-float-会等到一个-float-型" class="anchor" href="#%E5%B0%86%E5%85%B6%E4%B8%AD%E4%B8%80%E4%B8%AA%E8%BD%AC%E6%8D%A2%E4%B8%BA-float-%E4%BC%9A%E7%AD%89%E5%88%B0%E4%B8%80%E4%B8%AA-float-%E5%9E%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>将其中一个转换为 float, 会等到一个 float 型</h1>
+
+<p>10 /float(3)
+3.3333333333333335</p>
+
+<h1>
+<a id="幂运算" class="anchor" href="#%E5%B9%82%E8%BF%90%E7%AE%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>幂运算</h1>
+
+<p>2**101024</p>
+
+<h1>
+<a id="除法取整" class="anchor" href="#%E9%99%A4%E6%B3%95%E5%8F%96%E6%95%B4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>除法取整</h1>
+
+<p>10 // 3.0
+3.0 # 只取整部分</p>
+
+<h1>
+<a id="取模运" class="anchor" href="#%E5%8F%96%E6%A8%A1%E8%BF%90" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>取模运</h1>
+
+<p>10 % 3
+1
+位运算符 :
+2 &lt;&lt; 3 #2 左移 3 位, (10 ---&gt;10 000)
+16</p>
+
+<h1>
+<a id="位运算速度比较快" class="anchor" href="#%E4%BD%8D%E8%BF%90%E7%AE%97%E9%80%9F%E5%BA%A6%E6%AF%94%E8%BE%83%E5%BF%AB" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>位运算速度比较快</h1>
+
+<h1>
+<a id="按位与-" class="anchor" href="#%E6%8C%89%E4%BD%8D%E4%B8%8E-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>按位与 &amp;</h1>
+
+<p>3 &amp; 2
+2</p>
+
+<h1>
+<a id="安位或-" class="anchor" href="#%E5%AE%89%E4%BD%8D%E6%88%96-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>安位或 |</h1>
+
+<p>3 | 2
+3</p>
+
+<h1>
+<a id="异或--两个位置相同取-1-不同则取-0" class="anchor" href="#%E5%BC%82%E6%88%96--%E4%B8%A4%E4%B8%AA%E4%BD%8D%E7%BD%AE%E7%9B%B8%E5%90%8C%E5%8F%96-1-%E4%B8%8D%E5%90%8C%E5%88%99%E5%8F%96-0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>异或 , 两个位置相同取 1 ,不同则取 0</h1>
+
+<p>3 ^ 2
+1
+比较运算符,与其他语言都相同
+逻辑运算符,与其他语言类似,只是写法不同
+赋值运算符,与其他语言相同 a = 1 , 想 a 符号指向该数据存在的内存
+表达式
+由运算符,连接起来的变量或者常量,构成表达式 , 如 a = 1 和 c = a1 + b2
+优先级
+单目运算符高于双目运算符, not 例外 ; 单目运算符,只有一个数的运算符,如正负号,按位取反,not .python 里没有三目运算符
+算数运算符高于位运算符 :
+位运算符高于比较运算符
+比较运算符高于逻辑运算符
+赋值运算符优先级最低
+1 + 2 &lt;&lt; 2
+12
+3 &lt;&lt; 2
+12</p>
+
+<h1>
+<a id="先加再移位" class="anchor" href="#%E5%85%88%E5%8A%A0%E5%86%8D%E7%A7%BB%E4%BD%8D" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>先加再移位</h1>
+
+<h1>
+<a id="位运算符高于比较运算符" class="anchor" href="#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6%E9%AB%98%E4%BA%8E%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>位运算符高于比较运算符</h1>
+
+<p>2 &lt;&lt; 2 &lt; 6
+False
+() 可以提升运算符的优先级 , 某些情况为了程序的可读性也要有小括号
+程序结构
+顺序结构
+分支结构 ( if ,else,elif )
+if 语句
+if condition:
+expression
+示例:
+[root@yeahmonitor python]# cat if.py</p>
+
+<h1>
+<a id="usrbinenv-python-3" class="anchor" href="#usrbinenv-python-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>if 3 &lt; 5:
+print "3 less than 5" # 语句块里面可以是多个语句if 3 &gt; 4:
+print "3 greate than 4"
+[root@yeahmonitor python]# ./if.py
+3 less than 5
+else 子句
+if condition:
+expression
+else:
+expression
+if 语句里面还可以嵌套 if.python 是允许语句的嵌套的。 else 子句总是 if 语句的最后一个分支。不能出现在 elif 子句前面。
+elif 字句
+if condition:
+expresssion
+elif condition:
+expression</p>
+
+<h1>
+<a id="可以有多个-elif-子句--但是一旦其中一个分支没执行了就不会往下再去匹配执行了" class="anchor" href="#%E5%8F%AF%E4%BB%A5%E6%9C%89%E5%A4%9A%E4%B8%AA-elif-%E5%AD%90%E5%8F%A5--%E4%BD%86%E6%98%AF%E4%B8%80%E6%97%A6%E5%85%B6%E4%B8%AD%E4%B8%80%E4%B8%AA%E5%88%86%E6%94%AF%E6%B2%A1%E6%89%A7%E8%A1%8C%E4%BA%86%E5%B0%B1%E4%B8%8D%E4%BC%9A%E5%BE%80%E4%B8%8B%E5%86%8D%E5%8E%BB%E5%8C%B9%E9%85%8D%E6%89%A7%E8%A1%8C%E4%BA%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>可以有多个 elif 子句 , 但是一旦其中一个分支没执行了,就不会往下再去匹配执行了。</h1>
+
+<p>python 中没有 switch 语句。只能用 elif 模拟 switch.
+循环结构
+while 语句
+for 语句
+break 语句
+continue 语句
+else 子句
+while 循环
+while condition:
+expression
+示例:
+[root@yeahmonitor python]# cat while.py</p>
+
+<h1>
+<a id="usrbinenv-python-4" class="anchor" href="#usrbinenv-python-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>a = 3
+while a &lt;= 10:
+print a
+a += 1
+[root@yeahmonitor python]# chmod +x while.py
+[root@yeahmonitor python]# ./while.py
+3
+4
+5
+6
+7
+8
+9
+10
+for 语句
+for item in iterator:
+expression
+python 中 for 语句后边是要跟一个迭代器(列表,元组等)的。
+range 可以得到一个列表。range(1,10)
+[root@yeahmonitor python]# cat for.py</p>
+
+<h1>
+<a id="usrbinenv-python-5" class="anchor" href="#usrbinenv-python-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>for x in range(10):
+print x
+[root@yeahmonitor python]# chmod +x for.py
+[root@yeahmonitor python]# ./for.py
+0
+12
+3
+4
+5
+6
+7
+8
+9
+break 语句
+只能出现在循环块中
+用于跳出当前循环
+示例:
+[root@yeahmonitor python]# cat for.py</p>
+
+<h1>
+<a id="usrbinenv-python-6" class="anchor" href="#usrbinenv-python-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>for x in range(10):
+print x
+if x == 5:
+break
+[root@yeahmonitor python]# ./for.py
+0
+1
+2
+3
+4
+5
+continue 语句
+只出现在循环中
+跳出当前循环循环操作,接着执行下一次循环
+Python 内置容器
+列表
+list
+定义和初始化 list</p>
+
+<h1>
+<a id="定义个空列表" class="anchor" href="#%E5%AE%9A%E4%B9%89%E4%B8%AA%E7%A9%BA%E5%88%97%E8%A1%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>定义个空列表</h1>
+
+<p>In [1]: li = []
+In [2]: type(li)
+Out[2]: list</p>
+
+<h1>
+<a id="初始化-listlist-中的元素没有类型要求可以是任何类型" class="anchor" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-listlist-%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0%E6%B2%A1%E6%9C%89%E7%B1%BB%E5%9E%8B%E8%A6%81%E6%B1%82%E5%8F%AF%E4%BB%A5%E6%98%AF%E4%BB%BB%E4%BD%95%E7%B1%BB%E5%9E%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>初始化 list,list 中的元素没有类型要求,可以是任何类型</h1>
+
+<p>In [3]: li = [1,2,'a',['a',4]]
+In [4]: li
+Out[4]: [1, 2, 'a', ['a', 4]]
+列表的下标
+python 中列表的下标是从 0 开始的。
+In [4]: li
+Out[4]: [1, 2, 'a', ['a', 4]]
+In [5]: li[2]
+Out[5]: 'a'</p>
+
+<h2>
+<a id="in-6-li4" class="anchor" href="#in-6-li4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>In [6]: li[4]</h2>
+
+<p>IndexError
+Traceback (most recent call last)
+ in ()
+----&gt; 1 li[4]
+IndexError: list index out of range</p>
+
+<h1>
+<a id="得到-list-长度" class="anchor" href="#%E5%BE%97%E5%88%B0-list-%E9%95%BF%E5%BA%A6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>得到 list 长度</h1>
+
+<p>In [7]: len(li)
+Out[7]: 4in 关键字
+在 for 循环中使用表示遍历 list 中的所有元素:
+In [8]: for x in li:
+...:
+print x
+...:
+1
+2
+a
+['a', 4]
+in 也可以作为一个二元操作符使用 , 查找某个元素是否在 list 中存在:
+In [9]: 'a' in li
+Out[9]: True
+del 删除 list 中某个元素 :
+In [10]: li
+Out[10]: [1, 2, 'a', ['a', 4]]
+In [11]: del li[0]
+In [12]: li
+Out[12]: [2, 'a', ['a', 4]]
+在 python 中一切皆为对象,显然, list 也是对象,针对于列表对象来说,常用的操作:
+In [13]: dir(li)
+Out[13]:
+['<strong>add</strong>',
+'<strong>class</strong>',
+.........
+'<strong>str</strong>',
+'<strong>subclasshook</strong>',
+'append',
+'count',
+'extend',
+'index',
+'insert',
+'pop',
+'remove',
+'reverse',
+'sort']
+查看 list 对象 append 方法的帮助信息:
+In [14]: help(li.append)
+In [15]: li
+Out[15]: [2, 'a', ['a', 4]]
+In [16]: li.append(666)
+In [17]: li
+Out[17]: [2, 'a', ['a', 4], 666]
+extend 方法,接受一个迭代器,将迭代器的所有元素追加到 list 中:
+In [17]: li
+Out[17]: [2, 'a', ['a', 4], 666]
+In [18]: li.extend(['abc','cba'])
+In [19]: li
+Out[19]: [2, 'a', ['a', 4], 666, 'abc', 'cba']
+insert 方法,li.insert(2,'x') , li.insert(-1,'mm') , 在某个索引下标之前插入某个数据。
+remove 方法,li.remove('a') , 从 list 中移除某个元素。
+pop 方法,接受一个可选参数 index,remove 下标所指向的元素,并将钙元素返回,li.pop() , li.pop(2) :
+In [19]: li
+Out[19]: [2, 'a', ['a', 4], 666, 'abc', 'cba']In [20]: li.pop()
+Out[20]: 'cba'
+In [21]: li
+Out[21]: [2, 'a', ['a', 4], 666, 'abc']
+In [22]: li.pop(2)
+Out[22]: ['a', 4]
+In [23]: li
+Out[23]: [2, 'a', 666, 'abc']
+count 方法,返回某个值在 list 出现的次数 , li.count('a')
+index 方法,返回第一个匹配 value 的下标 :
+In [28]: li
+Out[28]: [2, 'a', 666]
+In [29]: li.index('a')
+Out[29]: 1</p>
+
+<h2>
+<a id="in-30-liindexb" class="anchor" href="#in-30-liindexb" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>In [30]: li.index('b')</h2>
+
+<p>ValueError
+Traceback (most recent call last)
+ in ()
+----&gt; 1 li.index('b')
+ValueError: 'b' is not in list</p>
+
+<h1>
+<a id="还可以指定起始和结束查找的范围参数-liindexa26" class="anchor" href="#%E8%BF%98%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E8%B5%B7%E5%A7%8B%E5%92%8C%E7%BB%93%E6%9D%9F%E6%9F%A5%E6%89%BE%E7%9A%84%E8%8C%83%E5%9B%B4%E5%8F%82%E6%95%B0-liindexa26" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>还可以指定起始和结束查找的范围参数 li.index('a',2,6)</h1>
+
+<p>In [33]: li
+Out[33]: [2, 'a', 666, 'a', 'a', 'b']
+In [34]: li.index('a',2)
+Out[34]: 3
+sort 方法,直接修改 list 内容,不返回值 . li.sort() , 还可以接受三个可选参数。L.sort(cmp=None, key=None, reverse=False)
+reverse 方法。li.reverse()
+list 的切片
+li[i],li[a:b],li[a:e:b]-- 第三个参数为步长 ,index 每次加几,默认为 1
+In [40]: li
+Out[40]: ['b', 'a', 'a', 'a', 666, 2]
+In [41]: li[2:4]
+Out[41]: ['a', 'a']</p>
+
+<p>In [43]: li[:2]
+Out[43]: ['b', 'a']</p>
+
+<p>In [44]: li[4:]
+Out[44]: [666, 2]</p>
+
+<h2>
+<a id="对-list-做一次深-copy" class="anchor" href="#%E5%AF%B9-list-%E5%81%9A%E4%B8%80%E6%AC%A1%E6%B7%B1-copy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>对 list 做一次深 copy</h2>
+
+<p>In [45]: li[:]
+Out[45]: ['b', 'a', 'a', 'a', 666, 2]</p>
+
+<p>In [46]: li[2:4:2]
+Out[46]: ['a']</p>
+
+<h2>
+<a id="用切片实现-list-翻转" class="anchor" href="#%E7%94%A8%E5%88%87%E7%89%87%E5%AE%9E%E7%8E%B0-list-%E7%BF%BB%E8%BD%AC" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>用切片实现 list 翻转</h2>
+
+<p>In [47]: li
+Out[47]: ['b', 'a', 'a', 'a', 666, 2]
+In [48]: li[::-1]
+Out[48]: [2, 666, 'a', 'a', 'a', 'b']</p>
+
+<h1>
+<a id="得到下标为偶数的-list" class="anchor" href="#%E5%BE%97%E5%88%B0%E4%B8%8B%E6%A0%87%E4%B8%BA%E5%81%B6%E6%95%B0%E7%9A%84-list" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>得到下标为偶数的 list</h1>
+
+<p>In [50]: li
+Out[50]: ['b', 'a', 'a', 'a', 666, 2]
+In [51]: li[::2]
+Out[51]: ['b', 'a', 666]</p>
+
+<h1>
+<a id="得到下标为奇数的值" class="anchor" href="#%E5%BE%97%E5%88%B0%E4%B8%8B%E6%A0%87%E4%B8%BA%E5%A5%87%E6%95%B0%E7%9A%84%E5%80%BC" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>得到下标为奇数的值</h1>
+
+<p>In [52]: li[1::2]
+Out[52]: ['a', 'a', 2]列表的切片操作是一个复制操作,并不对原始列表进行修改。
+元祖 tuple
+定义和初始化元祖
+In [1]: t = ()
+In [2]: type(t)
+Out[2]: tuple
+In [3]: t = (1,2,3)
+In [4]: t
+Out[4]: (1, 2, 3)
+元祖也支持下标和切片操作。
+元祖是不可变对象,不能对元祖的内容做修改
+In [4]: t
+Out[4]: (1, 2, 3)
+In [5]: t[1]
+Out[5]: 2</p>
+
+<h2>
+<a id="in-6-t1--100" class="anchor" href="#in-6-t1--100" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>In [6]: t[1] = 100</h2>
+
+<p>TypeError
+Traceback (most recent call last)
+ in ()
+----&gt; 1 t[1] = 100
+TypeError: 'tuple' object does not support item assignment
+元祖的不可变是相对的,因为元祖里面的内容可以是各种类型,如,元祖的元素值为列表:
+In [7]: t1 = ([2,3,4],[19,23,45])
+In [8]: t1
+Out[8]: ([2, 3, 4], [19, 23, 45])
+In [9]: t1[0][2]
+Out[9]: 4
+In [10]: t1[0][2] = 100 #list 的值是可变的,可以被修改的
+In [11]: t1
+Out[11]: ([2, 3, 100], [19, 23, 45])
+count , index 操作
+In [12]: t
+Out[12]: (1, 2, 3)
+In [13]: t.count(2)
+Out[13]: 1
+In [14]: t.index(3)
+Out[14]: 2
+元组支持切片操作与列表的切片操作一样。
+集合 set
+定义和初始化集合
+列表和元组都是有序的,但是集合是无序的。
+In [17]: s = {1,2,3}
+In [18]: type(s)
+Out[18]: set
+集合中的元素不重复
+In [19]: s = {1,1,1,12,2,2,3,4}In [20]: s
+Out[20]: {1, 2, 3, 4, 12}
+python 根据集合中的每个元素的 hash 值来判断是否重复,所以集合中的每个元素必须是可 hash 的对象。在 python 中如果一个对象有一个<strong>hash</strong> 的方法,
+表示该对象可 hash.
+In [21]: 1.<strong>hash</strong> # 整数 1 的对象有该方法,但是 <strong>hash</strong> 方法不能直接调用。
+1.<strong>hash</strong>
+hash() 函数直接返回某个对象的 hash 值。如hash(1)
+集合不支持切片操作。
+集合的操作:
+add 操作
+In [21]: s
+Out[21]: {1, 2, 3, 4, 12}
+In [22]: s.add(100)
+In [23]: s
+Out[23]: {1, 2, 3, 4, 12, 100}
+update 操作 , 迭代器作为参数,将迭代器中的所有元素追加到集合中
+In [23]: s
+Out[23]: {1, 2, 3, 4, 12, 100}
+In [24]: s.update([101,102,103])
+In [25]: s
+Out[25]: {1, 2, 3, 4, 12, 100, 101, 102, 103}
+remove 删除某个元素,若该元素不存在则报错
+discard 删除某个元素,若该元素不存在则不做任何操作。
+pop() 随机删除某个元素,并返回该元素
+clear 清空集合。s.clear()
+集合的运算
+difference 两个集合的差集,不修改原来的两个集合
+In [26]: s1 = {1,2,3,4,5,'a'}
+In [27]: s2 = {4,5,7,8,'b','c'}
+In [28]: s1.diff
+s1.difference
+s1.difference_update
+In [28]: s1.difference(s2)
+Out[28]: {1, 2, 3, 'a'}</p>
+
+<h1>
+<a id="减号可以直接求两个集合的差集" class="anchor" href="#%E5%87%8F%E5%8F%B7%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E6%B1%82%E4%B8%A4%E4%B8%AA%E9%9B%86%E5%90%88%E7%9A%84%E5%B7%AE%E9%9B%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>减号可以直接求两个集合的差集</h1>
+
+<p>In [29]: s1 - s2
+Out[29]: {1, 2, 3, 'a'}
+difference_update 两个集合的差集,但修改原来的集合 , 不返回值
+In [30]: s1
+Out[30]: {1, 2, 3, 4, 5, 'a'}
+In [31]: s2
+Out[31]: {4, 5, 7, 8, 'b', 'c'}
+In [32]: s1.difference_update(s2)
+In [33]: s1
+Out[33]: {1, 2, 3, 'a'}
+In [34]: s2
+Out[34]: {4, 5, 7, 8, 'b', 'c'}intersection 两个集合的交集,返回值,不修改原来的集合
+intersection_update 两个集合的交集,无返回值,修改原来的集合
+&amp; , s1 &amp; s2 直接求两个集合的交集
+union 两个集合的并集
+| , s1 | s2 也是求两个集合的并集
+isdisjoint 查看两个集合是否有交集,返回 bool, s1.isdisjoint(s2)
+issubset 查看是否是子集
+列表,元组,集合之间的转换
+list 函数
+In [35]: list()
+Out[35]: []
+In [36]: list('hello')
+Out[36]: ['h', 'e', 'l', 'l', 'o']
+tuple 函数
+set 函数
+In [37]: t = (1,2,3)
+In [38]: type(t)
+Out[38]: tuple
+In [39]: list(t)
+Out[39]: [1, 2, 3]
+将 list 转换为 set 的时候,若列表中存在重复元素,则移除重复的元素。
+迭代器 iterator
+iter 函数 , 构造集合。
+next 方法依次返回迭代器的值
+In [42]: li
+Out[42]: [1, 2, 3, 4, 5]
+In [43]: it = iter(li)
+In [44]: it.next()
+Out[44]: 1
+In [45]: it.next()
+Out[45]: 2
+当所有的元素都返回完的时候,会抛出一个StopIterator 的异常。
+list,tuple,set 都属于集合。
+for 语句,当将一个列表传递给for 语句的时候,实际上for 语句会将列表转换为迭代器,然后隐示的地执行该迭代器。
+字典 dict
+定义与初始化 In [46]: d = {}
+In [47]: type(d)
+Out[47]: dict
+In [48]: d = {'a':1,'v':'k'}
+In [49]: d
+Out[49]: {'a': 1, 'v': 'k'}
+在字典中 key 是不允许重复的,所以字典中的 key 必须是可 hash 的对象。
+字典的操作
+keys 将字典的所有 key 作为一个列表返回In [50]: d
+Out[50]: {'a': 1, 'v': 'k'}
+In [51]: d.keys()
+Out[51]: ['a', 'v']
+iterkeys 将字典的所有 key 作为一个迭代器返回
+In [52]: d.iterkeys()
+Out[52]: 
+In [53]: it = d.iterkeys()
+In [54]: it.next()
+Out[54]: 'a'
+values 返回一个列表,该列表是所有元素的值
+In [55]: d
+Out[55]: {'a': 1, 'v': 'k'}
+In [56]: d.values()
+Out[56]: [1, 'k']
+items , 返回一个列表,列表中的每个元素是一个元组,元组中的两个值分别是 key 和 value
+In [57]: d
+Out[57]: {'a': 1, 'v': 'k'}
+In [58]: d.items()
+Out[58]: [('a', 1), ('v', 'k')]
+遍历一个字典:
+In [59]: for v in d.values():
+....:
+print v
+....:
+1
+k
+In [60]: for k,v in d.items():
+....:
+print "%s =&gt; %s" % (k,v)
+....:
+a =&gt; 1
+v =&gt; k
+get , 按照 key 取值,若存在则返回,否则返回 None
+In [61]: d.get('a')
+Out[61]: 1
+还可以给get 传递第二个参数,表示若 key 不存在,则返回某个值。
+In [65]: d.get('xx',100)
+Out[65]: 100
+has_key , 判断某个 key 是否存在
+In [63]: d.has_key('a')
+Out[63]: True
+In [64]: d.has_key('aa')
+Out[64]: False
+给字典增加一个键值对:
+In [66]: d = {}
+In [67]: d['c'] = 1
+In [68]: d
+Out[68]: {'c': 1}
+In [69]: d['xx'] = 100
+In [70]: dOut[70]: {'c': 1, 'xx': 100}
+In [71]: d['xx'] = 200
+In [72]: d
+Out[72]: {'c': 1, 'xx': 200}
+update 操作
+In [73]: d
+Out[73]: {'c': 1, 'xx': 200}
+In [74]: d.update({'a':1,'b':2})
+In [75]: d
+Out[75]: {'a': 1, 'b': 2, 'c': 1, 'xx': 200}
+python 字典为引用传值,如:
+In [76]: d
+Out[76]: {'a': 1, 'b': 2, 'c': 1, 'xx': 200}
+In [77]: d1 = d
+In [78]: d1['a'] = 200
+In [79]: d1
+Out[79]: {'a': 200, 'b': 2, 'c': 1, 'xx': 200}
+In [80]: d
+Out[80]: {'a': 200, 'b': 2, 'c': 1, 'xx': 200}
+copy 操作:重新复制一个字典
+In [81]: d
+Out[81]: {'a': 200, 'b': 2, 'c': 1, 'xx': 200}
+In [82]: d2 = d.copy()
+In [83]: d2
+Out[83]: {'a': 200, 'b': 2, 'c': 1, 'xx': 200}
+In [84]: d2['a'] = 300
+In [85]: d2
+Out[85]: {'a': 300, 'b': 2, 'c': 1, 'xx': 200}
+In [86]: d
+Out[86]: {'a': 200, 'b': 2, 'c': 1, 'xx': 200}
+In [87]: id(d)
+Out[87]: 19662176
+In [88]: id(d2)
+Out[88]: 19501072
+In [89]: id(d1)
+Out[89]: 19662176
+列表解析
+[expression for item in iterator] 一个最基本的列表解析 , 返回一个列表
+在expression 可以使用item 变量
+返回一个迭代器
+(expression for item in terator)
+In [90]: li = [1,2,3]
+In [91]: l = (x+1 for x in li)
+In [92]: l
+Out[92]:  at 0x12fa730&gt;
+In [93]: l.next()
+Out[93]: 2In [94]: l.next()
+Out[94]: 3
+迭代器是惰性求值,只有用到了才会计算该值,否则不会。列表是先求出所有值的。所以当数据大的时候迭代器有较好的性能。
+带条件的列表解析
+[expression for item in iterator if condition] ,当满足条件的时候才会 append 到列表中,并返回。当变为小括号的时候,就会返回一个迭代器。
+In [95]: li
+Out[95]: [1, 2, 3]
+In [96]: [x for x in li if x % 2 ==0]
+Out[96]: [2]
+带多个条件 [expression for item in iterator if conditionX if conditionY]
+带多个迭代器(笛卡尔积与列表解析):[expr for x in IterX for y in IterY] , 类似于两个嵌套的 for 循环操作
+In [99]: [(x,y) for x in [1,2,3] for y in [1,3]]
+Out[99]: [(1, 1), (1, 3), (2, 1), (2, 3), (3, 1), (3, 3)]
+列表解析的性能远高于循环语句。
+作业:猜数字游戏:
+1.
+2.
+3.
+4.
+随机产生要猜的数字 (1-100)
+输入,用于接收用户输入的数字
+循环,如果没有猜对则循环接收输入,并打出提示信息
+猜到数字或猜测次数达到一定次数后( 6 次)打印失败并退出
+[root@localhost ~]# cat g_num.py</p>
+
+<h1>
+<a id="usrbinenv-python-7" class="anchor" href="#usrbinenv-python-7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<h1>
+<a id="codingutf-8" class="anchor" href="#codingutf-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>coding=utf-8</h1>
+
+<p>import random
+secret = random.randint(1,100)
+guess,tries = 0,0
+print u" 你好,请你给出一个 1-99 的数字,试下你的运气如何?你只有六次机会哟 ~ !! "
+while guess != secret and tries &lt; 6:
+print u" 请给出你猜的数字试多少: "
+guess_str = raw_input()
+g = int(guess_str)
+if g == secret:
+print u"wawawa...... 好吧,你猜中了,你说怎么办吧? "
+break
+elif g &lt; secret:
+print str(g),u"Are you a pig? 太小了。 "
+elif g &gt; secret:
+print str(g),u"Are you a pig? 太大了。 "
+tries += 1
+else:
+print u" 都猜了 6 次了,还没猜到。你能 chua!~~~"
+print u" 哥来告诉你,这个数字是 :",str(secret)
+这里需要注意的是,假如说,用户输入的是一个字符串怎么办???
+函数
+简单函数的定义
+def func_name():
+""" comment """
+expression
+func_name() # 调用函数
+示例:
+[root@yeahmonitor ~]# cat func.py#!/usr/bin/env python
+def func():
+print "Hi,Dog"
+func()
+局部变量和全局变量
+作用域:变量生效的范围
+局部变量:在函数内定义的变量,局部变量作用域为函数体
+全局变量:定义在函数之外,在函数内使用 global 关键字标记,全局变量的作用域为整个模块
+全局变量应尽量少用,但是有些配置性的信息可以直接使用全局变量定义较为方便调用
+变量覆盖
+示例,局部变量:</p>
+
+<h1>
+<a id="usrbinenv-python-8" class="anchor" href="#usrbinenv-python-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>arg = 10 # 这里是一个全局变量
+def func():
+arg = 2 # 这里是一个局部变量,与外边的 arg 是两个不同的变量
+print arg
+func()
+print arg
+示例,使用全局变量:</p>
+
+<h1>
+<a id="usrbinenv-python-9" class="anchor" href="#usrbinenv-python-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>arg = 10
+def func():
+global arg # 这里使用 global 定义 arg 是一个全局变量,下边的赋值操作会覆盖函数体外的赋值操作。
+arg = 6
+print arg
+func()
+print arg
+在函数体内可以直接调用全局变量:</p>
+
+<h1>
+<a id="usrbinenv-python-10" class="anchor" href="#usrbinenv-python-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>arg = 10
+def func():
+print arg
+func()
+print arg</p>
+
+<h1>
+<a id="在函数体内没有对-arg-变量有任何声明和赋值的操作所以这里的-arg-调用的是全局变量" class="anchor" href="#%E5%9C%A8%E5%87%BD%E6%95%B0%E4%BD%93%E5%86%85%E6%B2%A1%E6%9C%89%E5%AF%B9-arg-%E5%8F%98%E9%87%8F%E6%9C%89%E4%BB%BB%E4%BD%95%E5%A3%B0%E6%98%8E%E5%92%8C%E8%B5%8B%E5%80%BC%E7%9A%84%E6%93%8D%E4%BD%9C%E6%89%80%E4%BB%A5%E8%BF%99%E9%87%8C%E7%9A%84-arg-%E8%B0%83%E7%94%A8%E7%9A%84%E6%98%AF%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>在函数体内没有对 arg 变量有任何声明和赋值的操作,所以这里的 arg 调用的是全局变量</h1>
+
+<p>带参数的函数
+def func_name(args):
+expression
+func_name(values)</p>
+
+<h1>
+<a id="参数可以是一个或者多个" class="anchor" href="#%E5%8F%82%E6%95%B0%E5%8F%AF%E4%BB%A5%E6%98%AF%E4%B8%80%E4%B8%AA%E6%88%96%E8%80%85%E5%A4%9A%E4%B8%AA" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>参数可以是一个或者多个</h1>
+
+<p>示例:
+def funcArg(i):
+print i #i 作为参数传递进来,是一个局部变量
+funcArg('hello')
+多个参数用逗号隔开:
+def funcArg(i,m,k):
+print i,m,k
+funcArg('hello',1,2)
+位置参数和关键字参数def func_name(arg1,arg2):
+expression
+通常的调用方式为func_name(v1,v2) , 但是如果参数非常多,传值的时候一定要记好每个参数的顺序。这种是位置参数。 也可以以关键字的行为传递参
+数func_name(arg1=v1,arg2=v2) , 顺序就不那么重要了,这就是关键字参数。
+def funcArg(i,m,k):
+print i,m,k
+funcArg(m = 'hello',k=1,i=2)
+关键字参数和位置参数也可以混合使用:
+func_name(v1,arg2=v2)
+def funcArg(i,m,k):
+print i,m,k
+funcArg(m = 'hello',k=1,i=2)
+funcArg(20,k=100,m='hi')# 这里的位置参数必须在关键字参数之前 , 否则会有语法错误。
+默认参数
+对某一个或多个参数指定一个默认值:
+def func_name(arg1,arg2=v2):
+expression
+def func_name(arg1=v1,arg2=v2):
+expression
+示例:
+def func(i,j,k=1):
+print i,j,k
+func(2,200)
+func(1,2,3)# 默认参数有传值,会覆盖掉默认值
+在函数定义的时候,带默认值的参数必须放在不带默认值参数的后边。
+可变参数
+在 python 中也支持可变参数。
+参数有两种,一种是位置参数,另一种是关键字参数。那么可变参数同样支持这两种方式。
+可变位置参数:
+def func_name(*args):</p>
+
+<h1>
+<a id="函数中的-args-是一个元组" class="anchor" href="#%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84-args-%E6%98%AF%E4%B8%80%E4%B8%AA%E5%85%83%E7%BB%84" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>函数中的 args 是一个元组</h1>
+
+<p>expression
+func_name(v1,v2,v3...)
+示例:
+def func(<em>args):
+print type(args)
+for x in args:
+print x,
+print
+func(1,2,2,3,'a','v')
+[root@yeahmonitor ~]# python func.py
+
+1 2 2 3 a v
+*args 这种方式定义的方式,只能以位置传递参数进去,可变位置参数。
+可变关键字参数:
+def func_name(</em>*kwargs):</p>
+
+<h1>
+<a id="函数中的-kwargs-是一个字典" class="anchor" href="#%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84-kwargs-%E6%98%AF%E4%B8%80%E4%B8%AA%E5%AD%97%E5%85%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>函数中的 kwargs 是一个字典</h1>
+
+<p>expression
+func_name(k1=v1,k2=v2,k3=v3...)示例:
+def func(*<em>kwargs):
+print type(kwargs)
+for k,v in kwargs.items():
+print "%s =&gt; %s" % (k,v)
+func(i=1,j=2,k='aa')
+[root@yeahmonitor ~]# python func.py
+
+i =&gt; 1
+k =&gt; aa
+j =&gt; 2
+混合使用:
+非可变参数必须要在可变参数之前
+def func(i,j,</em>args):
+print i,j
+for x in args:
+print x
+func(1,2,'1',"a","abc")
+可变位置参数要在关键字参数之前
+参数解包
+参数解包发生在函数调用时 .</p>
+
+<h1>
+<a id="usrbinenv-python-11" class="anchor" href="#usrbinenv-python-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>def func(i,j,k):
+print i,j,k
+li = [1,2,3]
+func(li[0],li[1],li[2]) # 传统的调用方法
+func(*li) # 将列表解包并传递进去 , 这里是一个解包的过程。</p>
+
+<ul>
+<li>用于解包序列为位置参数。
+** 用于解包字典为关键字参数:
+#!/usr/bin/env python
+def func(i,j,k):
+print i,j,k
+li = [1,2,3]
+#func(li[0],li[1],li[2])
+func(<em>li)
+d = {'i':2,'j':100,'k':300}
+func(</em><em>d)
+函数返回值
+return 关键字
+def func(i):
+i *= 2
+return i
+j = func(2)
+print j
+可以返回任何对象
+可以变相返回多值def func(i):
+j = i * 2
+k = i * 9
+return j,k # 这里返回两个值,调用的时候需要有两个变量接受 , 这里其实是将 j,k 构造成一个元组返回。
+x,y = func(2)
+print x,y
+默认返回值 , 当函数中没有return 关键字的时候,函数会默认返回None , 所以所有的 python 函数都有返回值。
+递归函数
+函数体内调用自身的函数
+计算一个值的阶乘
+def fact(n):
+if n &lt;= 1:
+return n
+return fact(n-1) * n
+f = fact(10)
+print f
+递归函数需要有合适的退出条件
+python 中函数递归的最大深度为 1000
+python 中应尽量避免递归 , 绝大多数递归都是可以转换为迭代的。
+求阶乘的函数转换为迭代:
+def fact2(n):
+ret = 1
+for x in range(n,1,-1):
+ret *= x
+return ret
+print fact2(10)
+python 中的迭代要比递归快很多。
+以上为函数的基本定义知识点。
+在 python 中,函数是一等对象,可以像值一样的赋值,作为函数的返回值返回。
+函数作为参数
+def func1(arg):
+expression
+def func2(func):
+expression
+func2(func1)
+示例:
+#!/usr/bin/env python
+def func(f):
+print "this is func,i will call %s" % f.<strong>name</strong>
+f()
+def func2():
+print "this is func2"
+func(func2)
+X.<strong>name</strong> 获取某个对象的名称, python 中函数也是一个对象
+高阶函数
+像上边那样,以函数对象作为参数的函数叫高阶函数
+下边介绍三个内置的高阶函数:
+filter : filter(function or none,seq) 当函数返回为 true 的时候,会将序列的当前值加进来。
+In [1]: li = [1,2,3,4,5,6,7,8,10]In [2]: def f(x):
+...:
+return x % 2 == 0
+...:
+In [3]: filter(f,li)
+Out[3]: [2, 4, 6, 8, 10]
+# 这类似于列表解析
+map : 对列表中的所有元素执行一个函数
+In [4]: def f2(x):
+...:
+return x * 2
+...:
+In [5]: li
+Out[5]: [1, 2, 3, 4, 5, 6, 7, 8, 10]
+In [6]: map(f2,li)
+Out[6]: [2, 4, 6, 8, 10, 12, 14, 16, 20]
+# 这个也可以使用列表函数实现
+reduce :
+In [1]: li = [1,2,3,4]
+In [2]: def sum(x,y):
+...:
+return x * y
+...:
+In [3]: reduce(sum,li)
+Out[3]: 24
+函数嵌套定义
+def ext(): def internal(): expression
+返回函数
+def external():
+def internal():
+expression
+return internal
+示例:
+def ext_func():
+print "this is ext"
+def inn_func():
+print "this is inn"
+return inn_func
+f = ext_func() # 这里会返回函数 inn_func
+f()
+有了这些基础,那么加入我们要计算一个函数的执行时间,但又不想破坏这个函数,不想给这个函数增加其他额外的代码?
+#!/usr/bin/env python
+import time
+import datetime
+def func(arg):
+time.sleep(arg)
+def timeIt(func):
+def warp(arg):
+start = datetime.datetime.now()
+func(arg)
+end = datetime.datetime.now()
+cost = end - start
+print "execute %s spend %s" % (func.<strong>name</strong>,cost.total_seconds())
+return warp
+new_func = timeIt(func) # 这里会返回一个新的函数
+new_func(3) # 调用新的函数 , 并传值进去这样就以一种非侵入式的方式包装的这个函数,并且增加了我们需要的功能。这就是 python 中的装饰器。 类似于 java 的注解。
+装饰器
+主要就是解耦合,例如上边的我不需要计算函数的执行时间了,那么我直接调用该函数即可。
+在 python 中对装饰器提供更好的方法。
+<a href="https://github.com/timeIt" class="user-mention">@timeIt</a>
+def func(arg):
+time.sleep(arg)
+func(arg)
+示例:
+#!/usr/bin/env python
+import time
+import datetime
+def timeIt(func):
+def warp(arg):
+start = datetime.datetime.now()
+func(arg)
+end = datetime.datetime.now()
+cost = end - start
+print "execute %s spend %s" % (func.<strong>name</strong>,cost.total_seconds())
+return warp
+<a href="https://github.com/timeIt" class="user-mention">@timeIt</a> # 这里是 python 提供的一个语法糖
+def func(arg):
+time.sleep(arg)
+func(3)
+在这里func 函数被装饰器包装,所以func.<strong>name</strong> 返回的名字并不是 'func' 了,而是被装饰器改变为warp 。要想保留原来函数的<strong>name</strong> , <strong>doc</strong> 等元信
+息,需要做一下修改:
+#!/usr/bin/env python
+import time
+import datetime
+import functools
+def timeIt(func):
+@functools.wraps(func) # 增加这一行 , 将原函数作为值传递进去,表示将原函数的 <strong>name</strong>,<strong>module</strong>,<strong>doc</strong> 信息更新到装饰器里
+def warp(arg):
+start = datetime.datetime.now()
+func(arg)
+end = datetime.datetime.now()
+cost = end - start
+print "execute %s spend %s" % (func.<strong>name</strong>,cost.total_seconds())
+return warp
+<a href="https://github.com/timeIt" class="user-mention">@timeIt</a>
+def func(arg):
+time.sleep(arg)
+func(3)
+print func.<strong>name</strong>
+lambda 匿名函数 :
+Python 虽然不是一种函数式编程语言,但仍然给予了函数式编程很大的重视。接下来就聊一下 Python 函数式编程的知识,其中本文要说的是匿名函数
+lambda 。
+Python 使用 lambda 关键字创造匿名函数。所谓匿名,意即不再使用 def 语句这样标准的形式定义一个函数。这种语句的目的是由于性能的原因,在调用时绕
+过函数的栈分配。其语法是:
+lambda [arg1[, arg2, ... argN]]: expression
+其中,参数是可选的,如果使用参数的话,参数通常也会在表达式之中出现。
+lambda 语句的使用方法 ( 无参数 ):In [1]: def func():
+...:
+return 1
+...:
+In [2]: lambda:1 # 等价于上边定义的函数 , 不接受参数,直接返回值
+Out[2]: &gt;
+In [3]: f = lambda:1 #lambda 会返回一个函数,将该函数赋值给变量
+In [4]: f() # 调用函数
+Out[4]: 1
+声明一个带参数的匿名函数:
+In [5]: f = lambda x,y:x+y # 带有两个参数
+In [6]: f(10,2)
+Out[6]: 12
+In [7]: f = lambda x,y=10:x+y # 带默认值的参数
+In [8]: f(19)
+Out[8]: 29
+In [9]: f(19,2)
+Out[9]: 21
+In [10]: f = lambda *x:map(lambda x:x+10,x)# 可变位置参数
+In [11]: f(1,2,3,4)
+Out[11]: [11, 12, 13, 14]
+In [12]: f(</em>[2,3,4,5])
+Out[12]: [12, 13, 14, 15]
+示例:
+[root@yeahmonitor ~]# cat lam.py
+#!/usr/bin/env python
+func = {
+"add":lambda
+"sub":lambda
+"mul":lambda
+"div":lambda
+}
+x,y:x+y,
+x,y:x-y,
+x,y:x<em>y,
+x,y:x/y
+print func<a href="1,2">"add"</a>
+print func<a href="3,2">"sub"</a>
+print func<a href="4,5">"mul"</a>
+print func<a href="10,3">"div"</a>
+# 执行结果
+[root@yeahmonitor ~]# python lam.py
+3
+1
+20
+3
+generator 生成器
+生成器概念
+生成器不会把结果保存到一个系列中,而是保存生成器的状态,在每次进行迭代时计算并返回一个值,值到遇到StopIteration 异常结束。
+生成器语法
+生成器表达式:
+与列表解析语法相似,只不过把列表解析的 [] 换成 ()
+生成器表达式能做的事,列表解析基本都能处理;只不过在需要处理的序列比较大时,列表解析比较费内存。
+简单的生成器表达示例:
+In [1]: gen = (x</em>*2 for x in range(5))
+In [2]: gen
+Out[2]:  at 0x193e910&gt;In [3]: gen.next()
+Out[3]: 0
+In [4]: gen.next()
+Out[4]: 1
+In [5]: gen.next()
+Out[5]: 4
+In [6]: gen.next()
+Out[6]: 9
+In [7]: gen.next()
+Out[7]: 16
+In [8]: gen.next()
+---------------------------------------------------------------------------
+StopIteration
+Traceback (most recent call last)
+ in ()
+----&gt; 1 gen.next()
+StopIteration:
+生成器表达式,并不能实现较为复杂的功能。所以在工作中一般都是直接使用生成器函数。
+生成器函数:
+在函数中如果出现了 yield 关键字,那么该函数就不再是普通函数,而是生成器函数。
+生成器函数可以产生一个无限的序列,列表解析是无法这么做的。
+yield 的作用就是把一个函数变成一个 generator, 带有 yield 的函数不再是一个普通函数, Python 解释器会将其视为一个 generator 。
+产生无穷奇数的生成器函数:
+#!/usr/bin/env python
+def odd():
+n = 1
+while True:
+yield n
+n += 2
+od = odd()
+count = 0
+for i in od:
+if count &gt;= 5: break
+print i
+count += 1
+[root@walter ~]# python gen.py
+1
+3
+5
+7
+9
+题外话: 生成器是包含有 iter() 和 next() 方法的,所以可以直接使用 for 来迭代 . 查看帮助信息:
+# 定义一个简单的生成器函数
+In [1]: def odd():
+...:
+yield 1
+...:
+In [2]: o = odd()
+# 查看其帮助信息
+In [3]: help(o)
+odd
+|
+|
+|
+|
+|
+|
+|
+|
+= class generator(object)
+Methods defined here:
+<strong>getattribute</strong>(...)
+x.<strong>getattribute</strong>('name') &lt;==&gt; x.name
+<strong>iter</strong>(...)# 包含 iter 方法
+x.<strong>iter</strong>() &lt;==&gt; iter(x)|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+<strong>repr</strong>(...)
+x.<strong>repr</strong>() &lt;==&gt; repr(x)
+close(...)
+close() -&gt; raise GeneratorExit inside generator.
+next(...)# 包含 next 方法,所以可以直接用在 for 语句
+x.next() -&gt; the next value, or raise StopIteration
+send(...)# 使用该方法传值到生成器中
+send(arg) -&gt; send 'arg' into generator,
+return next yielded value or raise StopIteration.
+throw(...)# 使用该方法抛一个异常进去
+throw(typ[,val[,tb]]) -&gt; raise exception in generator,
+return next yielded value or raise StopIteration.
+由上边帮助信息可以看出,我们可以完全按照迭代器的循环方式遍历一个生成器。
+示例说明:
+#!/usr/bin/env python
+def odd():
+n = 1
+while True:
+yield n
+n += 2
+od = odd()
+count = 0
+for i in od:
+if count &gt;= 5: break
+print i
+count += 1
+# 在 for 循环执行的时候,每次都会执行 odd 函数内的代码。
+# 执行到 yield n 时,将 n 的值返回出去,此时函数内的代码不再往下执行 , 挂起状态,但会保存函内变量的相关信息。
+# 下次迭代的时,从 yield n 的下一条语句, n += 2 开始执行,
+# 这个时候 n 的值是之前保留的值,函数体内的 while 循环继续执行,当再次执行到 yield n 的时候,将 n 返回出去,此时的 n 是已经计算过 n+=2 了
+# 看起来就好像一个函数在正常执行的过程中被 yield 中断了数次,每次中断都会通过 yield 返回当前的迭代值。
+yield 与 return:
+在一个生成器中,如果没有 return ,则默认执行到函数完毕时返回 StopIteration ;
+def g1():
+...
+yield 1
+...
+g=g1()
+next(g)
+# 第一次调用 next(g) 时,会在执行完 yield 语句后挂起,所以此时程序并没有执行结束。
+1
+next(g)
+# 程序试图从 yield 语句的下一条语句开始执行,发现已经到了结尾,所以抛出 StopIteration 异常。
+Traceback (most recent call last):
+File "", line 1, in 
+StopIteration</li>
+</ul>
+
+<p>如果遇到 return, 如果在执行过程中 return ,则直接抛出 StopIteration 终止迭代。
+def g2():
+...
+yield 'a'
+...
+return
+...
+yield 'b'
+...
+g=g2()
+next(g)</p>
+
+<h1>
+<a id="程序停留在执行完-yield-a-语句后的位置" class="anchor" href="#%E7%A8%8B%E5%BA%8F%E5%81%9C%E7%95%99%E5%9C%A8%E6%89%A7%E8%A1%8C%E5%AE%8C-yield-a-%E8%AF%AD%E5%8F%A5%E5%90%8E%E7%9A%84%E4%BD%8D%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>程序停留在执行完 yield 'a' 语句后的位置。</h1>
+
+<p>'a'
+next(g)</p>
+
+<h1>
+<a id="程序发现下一条语句是-return-所以抛出-stopiteration-异常这样-yield-b-语句永远也不会执行" class="anchor" href="#%E7%A8%8B%E5%BA%8F%E5%8F%91%E7%8E%B0%E4%B8%8B%E4%B8%80%E6%9D%A1%E8%AF%AD%E5%8F%A5%E6%98%AF-return-%E6%89%80%E4%BB%A5%E6%8A%9B%E5%87%BA-stopiteration-%E5%BC%82%E5%B8%B8%E8%BF%99%E6%A0%B7-yield-b-%E8%AF%AD%E5%8F%A5%E6%B0%B8%E8%BF%9C%E4%B9%9F%E4%B8%8D%E4%BC%9A%E6%89%A7%E8%A1%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>程序发现下一条语句是 return ,所以抛出 StopIteration 异常,这样 yield 'b' 语句永远也不会执行。</h1>
+
+<p>Traceback (most recent call last):
+File "", line 1, in 
+StopIteration
+close()
+手动关闭生成器函数,后面的调用会直接返回 StopIteration 异常。&gt;&gt;&gt; def g4():
+...
+yield 1
+...
+yield 2
+...
+yield 3
+...
+g=g4()
+next(g)
+1
+g.close()
+next(g)</p>
+
+<h1>
+<a id="关闭后-yield-2-和-yield-3-语句将不再起作用" class="anchor" href="#%E5%85%B3%E9%97%AD%E5%90%8E-yield-2-%E5%92%8C-yield-3-%E8%AF%AD%E5%8F%A5%E5%B0%86%E4%B8%8D%E5%86%8D%E8%B5%B7%E4%BD%9C%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>关闭后, yield 2 和 yield 3 语句将不再起作用</h1>
+
+<p>Traceback (most recent call last):
+File "", line 1, in 
+StopIteration
+** send()**
+生成器函数最大的特点是可以接受外部传入的一个变量,并根据变量内容计算结果后返回。 这是生成器函数最难理解的地方,也是最重要的地方,实现后面
+我会讲到的协程就全靠它了。
+def gen():
+value=0
+while True:
+receive=yield value
+if receive=='e':
+break
+value = 'got: %s' % receive
+g=gen()
+print(g.send(None))
+print(g.send('aaa'))
+print(g.send(3))
+print(g.send('e'))
+执行结果:
+0
+got: aaa
+got: 3
+Traceback (most recent call last):
+File "h.py", line 14, in 
+print(g.send('e'))
+StopIteration
+执行流程:
+1. 通过 g.send(None) 或者 next(g) 可以启动生成器函数,并执行到第一个 yield 语句结束的位置。此时,执行完了 yield 语句,但是没有给 receive 赋值。 yield
+value 会输出初始值 0 注意:在启动生成器函数时只能 send(None), 如果试图输入其它的值都会得到错误提示信息。
+2. 通过 g.send(‘aaa’) ,会传入 aaa ,并赋值给 receive ,然后计算出 value 的值,并回到 while 头部,执行 yield value 语句有停止。此时 yield value 会输出 ”got:
+aaa” ,然后挂起。
+3. 通过 g.send(3) ,会重复第 2 步,最后输出结果为 ”got: 3′′
+4. 当我们 g.send(‘e’) 时,程序会执行 break 然后推出循环,最后整个函数执行完毕,所以会得到 StopIteration 异常。
+总结:
+1. 按照鸭子模型理论,生成器就是一种迭代器,可以使用 for 进行迭代。
+2. 第一次执行 next(generator) 时,会执行完 yield 语句后程序进行挂起,所有的参数和状态会进行保存。再一次执行 next(generator) 时,会从挂起的状态开
+始往后执行。在遇到程序的结尾或者遇到 StopIteration 时,循环结束。
+3. 可以通过 generator.send(arg) 来传入参数,这是协程模型。
+4. next() 等价于 send(None)
+作业 待定
+IO 与文本处理
+标准 IO 设备的操作
+print 语句
+print 语句可以将内容输出到标准输出上,如print 'hello' ;除此之外,print 还可以将内容输出到的文件对象里:
+In [2]: import sys
+In [3]: print &gt;&gt; sys.stderr,'hello' # 将内容输出到标准错误中
+hello
+print 函数 , 包含在<strong>future</strong> 模块中 :In [4]: from <strong>future</strong> import print_function
+In [5]: type(print) # 此时的 print 不再是个语句,而是个函数,这个时候 print 不能再像上边那么使用了
+Out[5]: builtin_function_or_method
+示例:
+In [6]: print("hello","world")
+hello world
+In [7]: print("hello","world",sep="\n")
+hello
+world
+raw_input 函数,是一个内置函数,从标准输入读入内容 :
+In [8]: s = raw_input()
+hello
+In [9]: s
+Out[9]: 'hello
+In [10]: s = raw_input("Plz input &gt;")
+Plz input &gt;hello world
+In [11]: s
+Out[11]: 'hello world'
+open 函数与 file 对象
+open() 是一个内置函数,open(name[,mode[,buffering]]) , 其实是对 file 的一个封装 , 返回一个 file 对象。下边详细介绍下 open 函数的 modes 参数都有哪些:
+r 以读的方式打开,定位到文件开头 , 默认的 mode
+r+ 以读写的方式打开,定位文件开头 , 可以写入内容到文件
+w 以写的方式打开,打开文件的时候会清空文件的内容,并且不能读
+w+ 以读写的方式打开,定位到文件头,并且打开文件的时候也会清空文件的内容
+a 以写的方式打开,定位到文件的末尾,是一个追加的操作 , 但并不允许读
+a+ 以读写的方式打开,定位到文件的末尾,追加的方式。
+在使用以上 mode 打开文件的时候,如果增加了b 模式,表示以二进制方式打开
+示例:
+In [12]: f = open('/tmp/test.txt','r')
+In [13]: f.read()
+Out[13]: 'test\n'
+In [14]: f.close()# 打开的文件必须要关闭,</p>
+
+<h1>
+<a id="否则随着文件打开的数量会消耗掉所有的文件描述符" class="anchor" href="#%E5%90%A6%E5%88%99%E9%9A%8F%E7%9D%80%E6%96%87%E4%BB%B6%E6%89%93%E5%BC%80%E7%9A%84%E6%95%B0%E9%87%8F%E4%BC%9A%E6%B6%88%E8%80%97%E6%8E%89%E6%89%80%E6%9C%89%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>否则随着文件打开的数量,会消耗掉所有的文件描述符</h1>
+
+<p>In [15]: f = open('/tmp/test.txt','r+')
+In [16]: f.write('123')
+In [18]: f.close()
+[root@yeahmonitor ~]# cat /tmp/test.txt
+123t
+file 对象的操作:
+read() 表示读取文件所有内容到内存里,可以带一个可选参数表示读取多少字节。当打开较大文件的时候慎用,或者是要加个参数表示读取多少字
+节 . f.read() 或者f.read(4)# 读取四个字节
+readline() 读取一行内容
+In [27]: f = open('/tmp/test.txt','r')
+In [28]: f.readline()
+Out[28]: 'test\n'
+In [29]: f.readline()
+Out[29]: 'test\n'
+In [30]: f.readline()
+Out[30]: 'test\n'
+In [31]: f.readline()Out[31]: 'testwww\n'
+readlines() 将所有行内容读到一个 list 里面 , 会将换行符读取进来
+In [24]: f = open('/tmp/test.txt','r')
+In [25]: f.readlines()
+Out[25]: ['test\n', 'test\n', 'test\n', 'testwww\n', 'tadc\n']
+write 写入内容到文件 , f.write('hello')
+writelines 将一个序列写入到文件中,但不会加换行符
+In [32]: f = open('/tmp/test.txt','w')
+In [33]: f.writelines(['11111','hello world','33444'])
+In [34]: f.close()
+[root@yeahmonitor ~]# cat /tmp/test.txt
+11111hello world33444[root@yeahmonitor ~]#
+truncate 清空文件,f.truncate() , 但是以 a 方式打开,则不会清空,因为 a 的方式是定位到文件末尾,该函数是从文件指针当前的位置开始清空内容的。
+flush 函数,将缓冲区的内容写入到硬盘中 , close() 函数会在关闭文件之前执行此操作。
+seek ,seek(offset[,whence]) ,offset 表示移动多少字节, whence 为 1 的时候表示相对于当前位置移动的;当 2 的时候从文件的末尾往后移动,但不一定所有
+的平台都支持;默认为 0 表示从文件开头往后移动
+tell() 返回当前文件指针的偏移量:
+In [35]: f = open('/tmp/test.txt')# 默认以 r 方式打开
+In [36]: f.tell()# 以 r 方式打开文件,定位到文件末尾
+Out[36]: 0
+In [40]: f.seek(3)
+In [41]:
+Out[41]:
+In [42]:
+Out[42]:
+In [43]:
+Out[43]:
+f.tell()
+3
+f.read()
+'11hello world33444'
+f.tell()
+21
+In [44]: f.seek(0)# 回到文件开头
+In [45]: f.tell()
+Out[45]: 0
+In [46]: f.read()
+Out[46]: '11111hello world33444'
+close() 函数,关闭当前打开的文件
+fileno() 函数,返回当前的文件描述符,一个数字
+isatty() 函数,当前打开的文件是否是一个终端设备
+closed 属性,当前文件是否关闭 ,|True,False, f.closed
+file 对象是一个迭代器:
+next() 方法 , 一行一行的读 , 每次读取一行
+In [48]: f = open('/tmp/test.txt')
+In [49]: f.next()
+Out[49]: '11111hello world33444'</p>
+
+<h2>
+<a id="in-50-fnext" class="anchor" href="#in-50-fnext" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>In [50]: f.next()</h2>
+
+<p>StopIteration
+Traceback (most recent call last)
+ in ()
+----&gt; 1 f.next()
+StopIteration:
+with 语法
+一般情况打开一个文件,经过操作之后,都要显式的执行xx.close() 将文件关闭 .with 用于需要打开、关闭成对的操作,可以自动关闭打开对象 .
+with expression as obj:# 将打开的对象赋值给 obj
+expression</p>
+
+<h1>
+<a id="obj-的作用域只在-with-语句中" class="anchor" href="#obj-%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8F%AA%E5%9C%A8-with-%E8%AF%AD%E5%8F%A5%E4%B8%AD" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>obj 的作用域只在 with 语句中</h1>
+
+<p>示例:
+In [55]: with open('/tmp/test.txt') as f:
+....:
+for line in f:
+....:
+print(line)
+....:
+11111hello world33444tadc
+tadc
+with 语法是可以自定义的,在面向对象中会更加详细的讲解。
+文本处理
+字符串处理
+分隔和连接
+split 函数,默认以空格分隔,可以传参指定分隔符
+In [1]: a = "aaa hello world"
+In [2]: a.split()
+Out[2]: ['aaa', 'hello', 'world']
+In [3]: a = "aaa,hello,world"
+In [4]: a.split(',')
+Out[4]: ['aaa', 'hello', 'world']
+In [5]: a.split(',',1)# 指定第二个可选参数,指定最大分隔
+Out[5]: ['aaa', 'hello,world']
+join 函数,字符串的连接 , 用于连接一个迭代器,返回一个字符串
+In [6]: it = ["hello","beijing","and xi'an"]
+In [7]: ",".join(it) # 以逗号连接列表为一个字符串
+Out[7]: "hello,beijing,and xi'an"</p>
+
+<ul>
+<li>也可以连接字符串 , 由于字符串是不可变的,所以在使用加号连接两个字符串的时候需要创建新的新的内存用来存储数据。
+字符串格式化
+python 中字符串格式化主要有两种方式 .
+占位符,%s 字符串,%d 整数 , %f 浮点数
+In [8]: "hello %s" % "world"
+Out[8]: 'hello world'
+In [9]: "hello %s %s" % ("world"," and xi'an")
+Out[9]: "hello world and xi'an"
+字符串查找
+find 函数,返回子字符串在原字符串中第一次出现的位置 , 若没有找到则返回 -1
+In [12]: str = "this is a dog"
+In [13]: str.find("is")
+Out[13]: 2
+In [14]: str.find("is",2,4)
+Out[14]: 2
+In [15]: str.find("is",3,4)# 还可以接受两个可选参数, start,end 用于标示查找的起始位置和结束位置
+Out[15]: -1字符串替换
+replace 函数,用于替换
+In [16]: str
+Out[16]: 'this is a dog'
+In [17]: str.replace("is","are")
+Out[17]: 'thare are a dog
+strip 函数,用来将字符串首尾的空白 ( 空格,制表符 ,\r,\n,\t) 移除
+In [18]: s = "hello world "
+In [19]: s
+Out[19]: 'hello world '
+In [20]: s.strip()
+Out[20]: 'hello world'
+In [21]: s = "hello world\n"
+In [22]: s
+Out[22]: 'hello world\n'
+In [23]: s.strip()
+Out[23]: 'hello world'
+rstrip 移除右边的空白,lstrip 移除左边的空白
+正则表达式
+python 中的正则标示是以标准库的形式提供的 , 在使用之前要先导入 import re
+正则表达式的基本模式:
+字面模式: 就是字面长量,就代表其本身
+. 匹配任何字符
+\w 匹配一个单词(字母) \W 匹配非字母
+\s 匹配空白 \S 匹配非空白字符
+\d 匹配数字
+^ 开头 $ 结尾
+\ 转义字符
+次数的匹配 , 匹配其前面的字符出现的次数 :</li>
+<li>0 次或多次</li>
+<li>一次或多次
+? 零次或一次
+{n} 出现 n 次
+{m,n} 出现 m 到 n 次
+中括号 , 表示一个范围 :
+中括号用于指向一个字符集合
+中括号可以使用元字符
+中括号中的. 表示其字面意思
+如[a-z] .
+捕获:
+位置捕获 (...)</li>
+<li>命名捕获 (?P...)
+In [25]: import re
+In [26]: s = "this is test for re <a href="mailto:walter.liu@163.com">walter.liu@163.com</a> test"
+In [27]: m = re.search(r'[\w.-]+@[\w.-]+',s)#r 表示字符串中的所有字符都不会被转义
+In [28]: m
+Out[28]: &lt;<em>sre.SRE_Match at 0x2156bf8&gt;
+In [29]: m.group()Out[29]: '<a href="mailto:walter.liu@163.com">walter.liu@163.com</a>'
+In [30]: m = re.search(r'([\w.-]+)@[\w.-]+',s)# 小括号表示位置捕获
+In [31]: m.groups()
+Out[31]: ('walter.liu',)
+In [32]: m = re.search(r'(?P[\w.-]+)@[\w.-]+',s)# 将捕获 ( 小括号中匹配的内容 ) 到的字符赋值给 user 变量
+In [33]: m.groupdict()
+Out[33]: {'user': 'walter.liu'}
+正则表达式中的断言 ( 作为选学 ) :
+在目标字符串当前匹配位置的前面或后面进行的一次测试,但不占用字符
+前向断言: (?=...) 肯定 ;(?!...) 否定
+后向断言: (?&lt;=...) 肯定 ;(?&lt;!...) 否定
+前面出现任何字符,以字符e 结尾的字符 :
+In [48]: m = re.findall(r'\w+(?=e)',s)
+In [49]: m
+Out[49]: ['t', 'r', 'walt', 't']
+In [50]: s
+Out[50]: 'this is test for re <a href="mailto:walter.liu@163.com">walter.liu@163.com</a> test'
+前面紧跟@ 的字符串 :
+In [59]: m = re.findall(r'(?&lt;=@)\w+',s)
+In [60]: m
+Out[60]: ['163']
+In [61]: m = re.search(r'(?&lt;=@)\w+',s)
+In [62]: m
+Out[62]: &lt;<em>sre.SRE_Match at 0x235a850&gt;
+In [63]: m.group()
+Out[63]: '163'
+下边具体说下re 模块的相关方法:
+re.match(p,text) :p 为正则表达式模式, text 要查找的字符串,会返回一个 match 对象
+re.search(p,text) : 只要在 text 中匹配到了 p 就返回,只返回第一个匹配到的
+re.findall(p,text) :将能匹配上的全返回,会返回一个 list
+re.split(p,text) : 按照 p 匹配,并且以匹配到的字符为分隔符切割 text, 返回一个切割后的 list
+re.sub(p,s,text) : 替换,将 p 匹配到的字符替换为 s.
+pattern = re.compile(p) 先编译 p 模式,当正则表达式模式比较复杂的时候,会先编译,然后再使用result = patter.match(text) , 这就可以使用编译好的
+模式去匹配各种字符串了。性能会有所提升。
+示例:
+In [1]: import re
+In [2]: text = "c++ python3 python3 perl ruby lua java php"
+#match
+In [4]: re.match(r'c++',text)#+ 要转义
+Out[4]: &lt;_sre.SRE_Match at 0x2be66b0&gt;
+In [5]: a = re.match(r'c++',text)# 将返回的 match 对象赋值给一个变量
+In [6]: a.group()# 使用 group 方法查看匹配到的内容
+Out[6]: 'c++'
+#match 从头匹配
+In [15]: a = re.match(r'java',text)# 因为 java 不在这行字符串的开头,所以 match 返回为 none.
+In [16]: a
+#search, 不需要从头匹配,只要能匹配到就返回
+In [19]: a = re.search(r'java',text)
+In [20]: aOut[20]: &lt;_sre.SRE_Match at 0x2466bf8&gt;
+In [21]: a.group()
+Out[21]: 'java'
+#findall 返回所有匹配到的内容,返回一个列表
+In [22]: text
+Out[22]: 'c++ python3 python3 perl ruby lua java php'
+In [23]: re.findall(r'python',text)
+Out[23]: ['python', 'python']
+In [24]: li = re.findall(r'python',text)
+In [25]: li
+Out[25]: ['python', 'python']
+#split
+In [27]: li = re.split(r' perl',text)
+In [28]: li
+Out[28]: ['c++ python3 python3', ' ruby lua java php']
+#sub
+In [29]: re.sub(r'ruby','php5',text)
+Out[29]: 'c++ python3 python3 perl php5 lua java php'
+元字符的使用:
+In [30]: re.findall(r'p+',text)# 匹配一个或多个字符 p
+Out[30]: ['p', 'p', 'p', 'p', 'p']
+In [31]: re.findall(r'p[a-zA-Z]+',text)#p 后面跟一个或多个字母
+Out[31]: ['python', 'python', 'perl', 'php']
+In [32]: re.findall(r'c[a-zA-Z]<em>',text)#</em> 匹配前面的字符出现 0 次或多次
+Out[32]: ['c']
+In [34]: re.findall(r'c[^a-zA-Z]<em>',text)#^ 用在中括号中意思是取反,本例中是 c 后面跟 0 个或多个非字母的字符
+Out[34]: ['c++ ']
+In [35]: re.findall(r'c[a-zA-Z]?',text)#? 表示前面的字符出现 0 次或 1 次
+Out[35]: ['c']
+In [36]: re.findall(r'[pj][a-zA-z]+',text)
+Out[36]: ['python', 'python', 'perl', 'java', 'php']
+In [37]: re.findall(r'p[^0-9]+|j[a-zA-Z]+',text)
+Out[37]: ['python', 'python', 'perl ruby lua java php']
+#^ 匹配开头
+In [38]: re.findall(r'^c..',text)
+Out[38]: ['c++']
+In [41]: re.findall(r'p\w+',text)#\w 还可以匹配到数字
+Out[41]: ['python3', 'python3', 'perl', 'php']
+In [42]: re.findall(r'p\w+\d',text)
+Out[42]: ['python3', 'python3']
+In [44]: re.findall(r'p\w{5,9}',text)
+Out[44]: ['python3', 'python3']
+#</em>? 非贪婪模式 ,+? 非贪婪模式
+In [52]: re.findall(r'p[^0-9]<em>',text)# 贪婪
+Out[52]: ['python', 'python', 'perl ruby lua java php']
+In [53]: re.findall(r'p[^0-9]</em>?',text)# 非贪婪
+Out[53]: ['p', 'p', 'p', 'p', 'p']
+In [54]: re.findall(r'p[^0-9]+?',text)# 非贪婪
+Out[54]: ['py', 'py', 'pe', 'ph']
+In [55]: re.findall(r'p[^0-9]+',text)# 贪婪
+Out[55]: ['python', 'python', 'perl ruby lua java php']
+#() 分组, (?pattern) 命名分组
+In [65]: a = re.findall(r'(p[a-zA-z]+)([0-9])',text)In [66]: type(a)
+Out[66]: list
+In [67]: a[1]
+Out[67]: ('python', '3')
+In [68]: a[1][0]
+Out[68]: 'python'
+In [69]: a
+Out[69]: [('python', '3'), ('python', '3')]
+In [75]: a = re.search(r'(?Pp[a-zA-Z]+)(?P[0-9])',text)
+In [76]: type(a)
+Out[76]: _sre.SRE_Match
+In [77]: a.group
+a.group
+a.groupdict
+a.groups
+In [77]: a.groupdict()
+Out[77]: {'name': 'python', 'version': '3'}
+In [78]: a.group()
+Out[78]: 'python3'
+In [79]: a.group('name')
+Out[79]: 'python'
+#compile
+In [80]: p = re.compile(r'(?Pp[a-zA-Z]+)(?P[0-9])')# 先编译
+In [81]: r = p.search("python3")
+In [82]: r.groupdict()
+Out[82]: {'name': 'python', 'version': '3'}
+一篇很全面讲解 python 正则表达式的文章 :<a href="http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html">http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html</a>
+案例分析
+有多个日志文件,统计访问前十的 IP 地址和访问次数。
+面向对象基础
+在了解面向对象之前,先了解下编程范式:
+编程范式是一类典型的编程风格,是一种方法学
+编程范式决定了程序员对程序执行的看法
+OOP 中,程序是一系列对象的相互作用
+python 支持多种编程范式:面向过程,面向对象,面向切面 ( 装饰器部分 ) 等
+OOP 思想
+面向对象的基本哲学:世界由具有各自运动规律和内部状态的对象组成,对象之间的相互作用和通讯构成了世界
+唯一性,世界上没有两片相同的树叶 , 同样的没有两个相同的对象
+分类性,分类是对现实世界的抽象
+三大特性,继承、多态和封装
+再来复习下类型 :
+计算机是用来处理数据的
+数据是一段内存
+类型告诉计算机这段内存是如何组织
+通过对基本类型的组织,可以构造更复杂的类型(如 list,set 等)
+In [1]: li = [2,3,4,5]# 列表中的每个元素都是整数,整数是一个基本类型,列表是由基本类型组织成的一个复杂的数据类型
+In [2]: f = lambda x:sum(x)/len(x)
+In [3]: f(li)
+Out[3]: 3
+另一个组织数据的示例:
+假如有一个表示门的数据
+门有两个属性:门牌号和打开 / 关闭状态有两个操作,打开和关闭
+#!/usr/bin/env python
+# 定义两个门的数据,用列表表示。第一个元素表示门的编号,
+# 第二个元素表示门的状态
+door1 = [1,'closed']
+door2 = [2,'closed']
+# 定义两个函数,表示可以对门执行的操作:打开、关闭
+def openDoor(door):
+door[1] = 'open'
+def closeDoor(door):
+door[1] = 'closed'
+openDoor(door1)
+print door1
+closeDoor(door1)
+print door1
+# 以上组织数据的方式有一个弊端,就是假如我们把列表的两个元素换下位置,那么我们对门的操作(打开或关闭)是无法完成的。也就是说作为门这个对象的使用者需要了解里面数据具体的布局。
+用类来组织数据
+#!/usr/bin/env python
+# 使用 class 关键字声明一个门的类
+class Door(object):
+def __init</em></em>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+# 定义对门的打开操作 , 作用域在该类里面
+self.status = 'open'
+def close(self):
+# 定义对门的关闭操作,作用域在类里面
+self.status = 'closed'
+door = Door(1,'closed')# 实例化一个门的示例,编号为 1 的门
+door.open()# 对编号为 1 的门执行打开操作
+print door.num,door.status# 输出门 1 的相关属性
+door.close()# 执行关闭操作
+print door.num,door.status
+print type(door)
+# 关于类的具体定义下边会详解
+类与实例
+类 是一类实例的抽象,抽象的属性和操作,如 Door 类
+实例 是类的具体化 , door = Door(1,'status') ,实例化 door 就是一个具体的对象了。
+定义类
+class Name:
+这种方式在 python3 和 python2.3 之前比较流行,但是在 python2.4 之后所有类都要继承自object 类。
+class Name(parents):
+示例:
+#!/usr/bin/env python
+#object 是所有类的父类,定义了一些通用的操作
+class Door(object):
+# 类里面的操作称之为方法,
+def <strong>init</strong>(self,num,status):
+self.num = numself.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+door = Door(1,'closed')
+door.open()
+print door.num,door.status
+door.close()
+print door.num,door.status
+print type(door)
+定义方法:
+class Name(parents):
+def method(self,args...):
+# 定义一个方法,第一个参数都是
+#self, 表示实例本身 . 调用方法的时候是不需要传递
+#self 这个参数的 , 解释器会自动的将当前的实例传递
+# 给 self
+body
+关于self :
+door = Door(1,'open')#self 代表的就是 door 这个实例本身
+door2 = Door(2,'closed')
+构造方法:
+class Name(parents):
+def <strong>init</strong>(self,args...):
+expression
+instance = Name(args...)
+<strong>init</strong> 就是 python 类中的构造方法 . 实例化类的时候就会调用构造方法door = Door(1,'open') 传递的参数就是构造方法所需要的参数 .
+self 关键字 :
+self 代表实例本身
+实例变量
+class Door(object):
+def <strong>init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+self.num 就是一个实例变量(也可称为属性),实例变量一般都在构造函数中定义,但也可以在类的其他方法里面定义(但要尽可能在再构造函数中定义实
+例变量)。实例变量是依附于某一个具体的实例的。定义语法为self.argName 。
+实例方法 刚才 Door 类中定义的方法都称为实例方法(一般简称为方法)。实例方法也是可以动态修改的:
+#!/usr/bin/env python
+class Door(object):
+def <strong>init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'def close(self):
+self.status = 'closed'
+door = Door(1,'closed')
+def test():
+print "test"
+door.test = test
+# 动态的给 door 实例增加一个 test 属性,该属性的值为 test 函数,该属性只对当前实例 (door) 有效。
+door.test()
+接下来介绍下,类的封装性
+私有成员
+以双下划线开始,不以双下划线结束
+python 中其实没有真正的私有成员
+#!/usr/bin/env python
+class Door(object):
+def <strong>init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+def <strong>test(self):# 定义了一个私有方法
+print "__test"
+door = Door(1,'closed')
+#door.__test()# 这一行会报错
+door._Door__test()# 这一行是可以正常打印的,所以 python 中没有真正的私有成员,但是在生产上不要使用这种方式调用私有成员。
+类变量
+定义在实例方法之外的变量
+所有实例共享类变量 , 但某一个实例对类变量的修改不会影响其他实例和类本身
+类变量可以直接访问
+#!/usr/bin/env python
+class Door(object):
+a = 1# 定义一个类变量
+def __init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+def <strong>test(self):
+print "__test"
+door1 = Door(1,'closed')
+door2 = Door(2,'open')
+print Door.a# 可以直接使用类访问类变量
+print door1.a# 通过实例访问类变量
+print door2.a
+# 以上三行输出的值是一样的
+示例二:
+#!/usr/bin/env python
+class Door(object):
+a = 1def __init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+def <strong>test(self):
+print "__test"
+door1 = Door(1,'closed')
+door2 = Door(2,'open')
+print Door.a
+print door1.a
+door1.a = 100
+print door2.a
+print Door.a
+print door1.a
+[root@liuzhenwei ~]# python d2.py
+1
+1
+1
+1
+100
+类方法
+使用<a href="https://github.com/classmethod" class="user-mention">@classmethod</a> 装饰器装饰的方法
+第一个参数代表类本身
+类方法可以直接调用
+类方法里可以定义类变量
+示例:
+#!/usr/bin/env python
+class Door(object):
+a = 1
+def __init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+def <strong>test(self):
+print "__test"
+# 定义一个类方法
+<a href="https://github.com/classmethod" class="user-mention">@classmethod</a>
+def test(cls):
+cls.b = 200# 定义一个类变量
+print "test class func"
+Door.test()# 直接使用类调用类方法
+print Door.b # 打印类变量
+d1 = Door(1,'open')
+d1.test()# 通过实例调用类方法
+# 在类方法里不能调用实例相关的东西,即不能使用 self
+静态方法
+静态方法以<a href="https://github.com/staticmethod" class="user-mention">@staticmethod</a> 装饰器装饰
+静态方法也可以直接调用
+静态方法没有限定第一个参数
+示例:
+#!/usr/bin/env pythonclass Door(object):
+a = 1
+def __init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+def <strong>test(self):
+print "__test"
+<a href="https://github.com/classmethod" class="user-mention">@classmethod</a>
+def test(cls):
+cls.b = 200
+print "test class func"
+# 定义一个静态方法
+<a href="https://github.com/staticmethod" class="user-mention">@staticmethod</a>
+def test2():
+print "test2 static func"
+Door.test2()# 通过类调用静态方法
+d1 = Door(1,'open')
+d1.test2()# 通过实例调用静态方法
+属性
+属性以<a href="https://github.com/property" class="user-mention">@property</a> 装饰器装饰
+属性的setter 方法
+属性的适用场合
+属性是属于实例的。
+示例:
+#!/usr/bin/env python
+class Door(object):
+a = 1
+def __init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+def <strong>test(self):
+print "__test"
+<a href="https://github.com/classmethod" class="user-mention">@classmethod</a>
+def test(cls):
+cls.b = 200
+print "test class func"
+<a href="https://github.com/staticmethod" class="user-mention">@staticmethod</a>
+def test2():
+print "test2 static func"
+# 定义一个属性, <a href="https://github.com/property" class="user-mention">@property</a> 装饰器可以使被装饰
+# 的方法称为一个属性 , 类似于其他语言的 get 方法
+<a href="https://github.com/property" class="user-mention">@property</a>
+def opened(self):
+return self.status == 'open'
+# 当一个方法被 @peoperty 装饰之后,自己
+# 也就称为另一个装饰器
+<a href="https://github.com/opened" class="user-mention">@opened</a>.setter
+def opened(self,value):
+# 此 opened 就类似于其他语言的 set 方法# 该方法必须与上一个方法同名
+if value:
+self.status = 'open'
+else:
+self.status = 'closed'
+d1 = Door(1,'open')
+print d1.opened # 实例调用属性
+d1.opened = False
+# 给该属性赋值,相当于调用了该属性的 set 方法进行赋值操作
+print d1.opened
+# 调用属性,也就是相当于调用了 get 方法
+为什么要这么麻烦的使用这个呢??
+下边是一个简单的时间类,默认以字符串的形式返回当前的时间,也可以以字符串的形式设置时间,整体来说是封装了私有属性__time :
+#!/usr/bin/env python
+import datetime
+class T(object):
+def __init</strong>(self):
+self.<strong>time = datetime.datetime.now()
+<a href="https://github.com/property" class="user-mention">@property</a>
+def time(self):
+return self.__time.strftime('%Y-%m-%d %H:%M:%S')
+<a href="https://github.com/time" class="user-mention">@time</a>.setter
+def time(self,value):
+self.__time = datetime.datetime.strptime(value,'%Y-%m-%d %H:%M:%S')
+t = T()
+print t.time
+t.time = '2015-12-20 15:30:00'
+print t.time
+在工作中,有些需求需要对 IP 地址进行处理,因为在计算机中 IP 都是整数的形式做运算的,但是展现出来的时候都是字符串形式(点分十进制),便于人类
+查看。就可以使用上述方法实现对 IP 操作的封装。
+以上就是 python 中关于类的基本定义与操作。下边再介绍一些类的更高级的操作。
+魔术方法
+魔术方法总是由双下划线包围,如__init</strong> ,这些方法都是有特殊用途的
+<strong>new</strong> , <strong>init</strong> , <strong>del</strong>
+<strong>cmp</strong> , <strong>eq</strong> , <strong>ne</strong> , <strong>lt</strong> , <strong>le</strong> , <strong>gt</strong> , <strong>ge</strong>
+<strong>add</strong> , <strong>sub</strong> , <strong>mul</strong> , <strong>div</strong>
+<strong>str</strong> , <strong>repr</strong> , <strong>unicode</strong>
+<strong>new</strong> 方法,会在元类里面讲解到,这里暂时不做讨论。
+<strong>del</strong> 方法,简单理解为是一个析构函数,当一个对象被垃圾回收机制回收的时候,其实就是调用了该方法,可以在该方法中定义一些释放资源的操作,
+如文件的关闭、数据库连接的关闭等。
+<strong>cmp</strong> 方法,是一个通用的比较函数。在 python3 中该方法发生了较大的变化。一般工作中不会使用该方法,而是分别使用<strong>eq</strong> , <strong>ne</strong> 等之类的方法。
+<strong>eq</strong> 方法,定义了一个等于的行为,重载了等于操作符 :
+#!/usr/bin/env python
+class T(object):
+def <strong>init</strong>(self,a):
+self.a = a
+def <strong>eq</strong>(self,other):
+return self.a == other.a
+t1 = T(100)t2 = T(100)
+print t1 == t2 # 调用了 <strong>eq</strong> 方法
+print t2 == t1
+<strong>add</strong> 方法:
+#!/usr/bin/env python
+class A(object):
+def <strong>init</strong>(self,a):
+self.a = a
+def <strong>add</strong>(self,other):
+return A(self.a + other.a)
+a1 = A(200)
+a2 = A(500)
+a3 = a1 + a2
+print a3.a # 输出 700
+# 其实, str 对象也是定义了一个 <strong>add</strong> 方法,重载了加号为字符串连接
+<strong>str</strong> 方法,定义了我们使用 str 方法活直接 print 对象时候的一个行为:
+#!/usr/bin/env python
+class S(object):
+def <strong>init</strong>(self,a):
+self.a = a
+def <strong>str</strong>(self):
+return "a=%s" % self.a
+a = S('hello')
+print str(a)# 输出 a=hello
+<strong>repr</strong> 类似于<strong>str</strong> , 不过<strong>repr</strong> 返回的是机器可读的字符串,<strong>str</strong> 返回的是人类可读的 .
+<strong>unicode</strong> 返回一个 unicode 的对象u'hello' ,类似于<strong>str</strong> 方法。
+<strong>hash</strong> 方法 :
+In [4]: class A(object):
+def <strong>hash</strong>(self):
+return 123
+...:
+In [5]: a = A()
+In [6]: hash(a)
+Out[6]: 123
+# 我们定义类的时候是不需要定义 <strong>hash</strong> 方法 的,因为父类 object 已经定义过了。
+<strong>getattr</strong> 方法 , 当一个实例有这个属性的时候直接返回,如果没有会调用该方法。
+#!/usr/bin/env python
+class Test(object):
+def <strong>init</strong>(self):
+self.a = 1
+def foo(self):
+print "call foo"
+def <strong>getattr</strong>(self,name):
+print "get attr %s" % name
+return name
+t = Test()
+print t.a
+t.foo()
+print t.bar# 没这个方法,也没这个属性,所以会调用 <strong>getattr</strong> 方法
+<strong>enter</strong> 和<strong>exit</strong> , 在 IO 的部分说过 with 语法,只要一个类实现了这个两个方法就可以使用 with 语法:
+class W(object):
+def <strong>init</strong>(self):
+self.f = open('/tmp/test.txt','w')
+def <strong>enter</strong>(self):
+return self.f
+def <strong>exit</strong>(self,*excinfo):
+# 该方法接受一个可变参数,出现异常的时候将异常传
+# 值给该参数,在该函数内根据异常可以做相应的处理
+self.f.close()
+with W() as f:
+f.write("hello world") # 向文件中写一行内容
+面向对象进阶
+继承
+在面向对象,继承是一个很重要特性。
+子类与父类: 子类是对父类的一种扩展,在父类的属性和方法上进行一些扩展
+示例:
+#!/usr/bin/env python
+# 定义一个带编号和状态的门类
+class Door(object):
+def <strong>init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+# 定义一个可以锁的门的类
+class Lockable(object):
+def <strong>init</strong>(self,num,status,locked):
+self.num = num
+self.status = status
+self.locked = locked
+def open(self):
+if not self.locked:
+self.status = 'open'
+else:
+print "the door is locked"
+def close(self):
+self.close = 'closed'
+上述两个类,其实有很多是相同的东西,只是在Lockable 类中新增某些新的门的特性而已。
+使用子类继承父类:
+# 继承自父类 Door
+class Lockable(Door):
+def <strong>init</strong>(self,num,status,locked):
+super(Lockable,self).<strong>init</strong>(num,status)# 调用父类的构造函数
+self.locked = locked
+# 对 open 方法进行重载
+def open(self):
+if not self.locked:
+# 调用父类的方法
+super(Lockable,self).open()
+else:
+print "the door is locked"重写:
+上边的示例中,针对于open 方法就是进行了重写。子类中的方法与父类的方法名相同,其实构造函数也进行了重写,扩展了一些功能。
+上边例子中我只是为了扩展一点内容而已,不是真的需要完全重写父类的方法,所以在子类的同名方法中,我们就需要调用父类的方法:
+使用super(className,self) 来调用父类的同名方法 , 这样就构造了一个 super 对象,代表的是当前类的父类。
+示例:
+#!/usr/bin/env python
+class Door(object):
+def <strong>init</strong>(self,num,status):
+self.num = num
+self.status = status
+def open(self):
+self.status = 'open'
+def close(self):
+self.status = 'closed'
+class Lockable(Door):
+def <strong>init</strong>(self,num,status,locked):
+super(Lockable,self).<strong>init</strong>(num,status)
+self.locked = locked
+def open(self):
+if not self.locked:
+super(Lockable,self).open()
+else:
+print "the door is locked"
+ld = Lockable(1,'closed',True)
+ld.open()
+# 输出 the door is locked
+还可以对子类增加一个locke 的方法:
+class Lockable(Door):
+def <strong>init</strong>(self,num,status,locked):
+super(Lockable,self).<strong>init</strong>(num,status)
+self.locked = locked
+def open(self):
+if not self.locked:
+super(Lockable,self).open()
+else:
+print "the door is locked"
+def lock(self):
+self.locked = True
+多继承
+大多数情况只会用到单继承,但是 python 也是提供多继承的支持的。
+多继承语法 :
+class ClassName(p1,p2,...):
+示例:
+#!/usr/bin/env python
+class A(object):
+# 若一个类没有定义构造方法, python 解释器默认会生成一个这样的构造方法
+def <strong>init</strong>(self):
+pass
+def ma(self):
+print "A.method.a"
+class B(object):
+# 该类没那个定义 <strong>init</strong> 方法,默认会自动生成
+def mb(self):print "B.method.b"
+class C(A,B):
+pass
+c = C()
+# 虽然在 C 类里什么都没做,但它已经从 A , B 里面继承了两个方法
+c.ma()
+c.mb()
+但是多继承中会存在某些问题,加入 C 的两个父类的某个方法名称是一样的。那么子类会选择第一个父类的方法执行。
+#!/usr/bin/env python
+class A(object):
+def <strong>init</strong>(self):
+pass
+def m(self):
+print "A.method.a"
+class B(object):
+def m(self):
+print "B.method.b"
+class C(A,B):
+pass
+c = C()
+c.m()# 输出 A.method.a
+目前来看就是子类就是执行的其父类列表里左边的父类的方法。那么看下边的示例:
+#!/usr/bin/env python
+class A(object):
+def <strong>init</strong>(self):
+pass
+def m(self):
+print "A.method.a"
+class B(A):
+def m(self):
+print "B.method.b"
+class C(A,B):
+pass
+c = C()
+c.m()
+# 执行上述代码后会抛出一个错误:
+[root@liuzhenwei ~]# python cl.py
+Traceback (most recent call last):
+File "cl.py", line 15, in 
+class C(A,B):
+TypeError: Error when calling the metaclass bases
+Cannot create a consistent method resolution
+order (MRO) for bases A, B
+MRO: 方法确定的一个顺序,在 python 中存在多继承,当继承列表中有同名方法的时候, python 就是根据这个 MRO 来选择子类该执行哪个方法的。
+包管理
+如何使用包:
+import
+from ...import ...
+from ...import ... as ...
+import sys 此时就可以使用 sys 包了
+from os import path 引用 os 包下面的 path 包from os import path as p 将引用进来的 path 包做了个别名为 p
+创建自己的模块 :
+单文件模块:
+每个 python 文件都是一个模块
+文件名就是模块名
+注:包名尽量要全是小写
+示例:
+[root@liuzhenwei t]# vim mod1.py# 创建一个空的 python 文件
+# 在 ipython 下直接 import 即可
+In [1]: import mod1
+In [2]: help(mod1)
+目录模块 :
+init.py 要想使目录称为一个模块,该目录下必须包含这个文件
+子模块 , 在这个目录下其他所有文件都称为一个子模块
+all 属性 , 在 init.py 中可以没有任何内容,但也可以有 all 属性
+示例:
+[root@liuzhenwei t]# ls foo/
+bar.py
+<strong>init</strong>.py
+# 这个时候就可以使用下属方引入 bar 子模块
+from foo import bar
+或
+import foo.bar
+#<strong>all</strong> 属性
+[root@liuzhenwei t]# cat foo/<strong>init</strong>.py
+<strong>all</strong> = ['bar',]# 保存当前目录下所有子模块的列表
+In [1]: from foo import *# 会将 <strong>all</strong> 属性中列表的锁有子模块导入进来
+In [2]: bar
+Out[2]: 
+如果这个目录下还有一个子目录的话,那么子目录也必须得有 init.py 这个文件。
+示例:
+[root@liuzhenwei t]# ls foo/
+bar.py bar.pyc <strong>init</strong>.py <strong>init</strong>.pyc
+[root@liuzhenwei t]# cat foo/bar.py
+def func():
+print "test mod"
+[root@liuzhenwei t]# cat test.py
+#!/usr/bin/env python
+from foo import bar
+bar.func()
+注: import 即执行,即在 import 某个文件模块的时候,是会执行这个 python 文件的,如:
+[root@liuzhenwei t]# cat foo/bar.py
+def func():
+print "test mod"
+print 11# 这有一行输出语句,在执行 import 导入该模块的时候会被执行
+In [1]: from foo import bar
+11
+解决方法:if <strong>name</strong> == '<strong>main</strong>' :
+[root@liuzhenwei t]# cat foo/bar.py
+def func():
+print "test mod"if <strong>name</strong> == '<strong>main</strong>':
+# 在被其他文件作为模块引入的时候,
+# 该条件判断为 false, 所以下边的语句被不会执行,
+# 但是可以单独手动的执行该文件, python bar.py 。
+print 11
+模块的查找和引用
+sys 模块下有一个path 属性,保存了 Python 默认的查找路径,按照顺序依次往后查找所引用的包:
+import sys
+sys.path
+['', '/usr/lib64/python26.zip', '/usr/lib64/python2.6', '/usr/lib64/python2.6/plat-linux2', '/usr/lib64/python2.6/lib-tk', '/usr/lib64/python2.6/lib-old', '/us
+# 列表的第一个值为空,表示当前目录,当使用 import 导入模块的时候,默认会先查找当前目录下是否有该模块,然后依次查找后边给出的路径。
+在工作中,有时候也会见到有些同事或者其他朋友写程序的时候,将一个特定的查找路径追加到sys.path 中,方便程序导入模块。但一般不建议这么做,尽
+量少修改系统原有的 “ 环境变量 ” 等信息。
+简单了解一个模块:
+OS 模块
+为访问操作系统的特定熟悉提供方法
+提供了对平台模块的封装(对 windows, 对 mac 的封装等)
+对环境变量的操作:可以修改或者获取环境变量,修改环境变量是持久性修改的。
+import os
+os.environ
+{'SSH_ASKPASS': '/usr/libexec/openssh/gnome-ssh-askpass', 'LESSOPEN': '||/usr/bin/lesspipe.sh %s', 'SSH_CLIENT': '10.25.0.1 49909 22', 'SELINUX_USE_CURRENT_RAN
+工作目录的相关操作:os.getcwd() 获取当前的工作目录
+文件系统相关的操作:
+os.access(path,mod) 判断对一个文件或者目录是否具有指定的权限
+mode 参数的可选值: ROK, WOK, 和 X_OK
+os.access('/tmp',os.R_OK)
+True
+os.access('/tmp',os.X_OK)
+True
+os.access('/tmp',os.W_OK)
+True
+os.stat() 相当于对 Linux 下 stat 命令的一个封装
+os.stat('/tmp')
+posix.stat_result(st_mode=17407, st_ino=259075, st_dev=2050L, st_nlink=18, st_uid=0, st_gid=0, st_size=4096, st_atime=1458681523, st_mtime=1458681528, st_ctime
+s = os.stat('/tmp')
+s.st_atime
+1458681523.5486367
+s.st_uid
+0
+s.st_size
+4096
+os.listdir() 列车给定目录的内容
+os.listdir('/tmp')
+['orbit-gdm', 'ks-script-V5pzEo.log', 'vmware-walter', 'vmware-config0', 'vgauthsvclog.txt.0', 'pulse-kbdbaPr3T3eB', 'pulse-cbhCLNnWv5AJ', '.X11-unix', 'vmware
+os.mkdir(path) 创建目录
+os.mkdirs(path) 创建目录树,相当于mkdir -p 操作
+对于 OS 还有其他好多方法,具体可查看官方文档,接下来说下os.path 模块。
+os.pathos.path 是os 的一个子模块 , 主要是对路径进行解析、创建、测试和其他的一些操作,封装了不同平台的路径操作。
+路径解析:
+from os import path
+path.split('/tmp/test/ab')# 讲路径切割成了 dirname 和 basename 。传入的路径可以不存在
+('/tmp/test', 'ab')
+path.basename('/tmp/test/ab')
+'ab'
+# 直接返回 basename
+path.dirname('/tmp/test/ab')
+'/tmp/test'
+# 返回 dirname
+.splitext(path) 解析扩展名
+path.splitext('aaa.tar.gz')
+('aaa.tar', '.gz')
+将给定的字符连接成一个路径
+path.join('a','b','c')
+'a/b/c'
+根据相对路径得到绝对路径:
+path.abspath('.')
+'/root'
+path.abspath('../tmp')
+'/tmp'
+path.abspath('../tmp/test')
+'/tmp/test'
+文件属性相关
+os.path.getatime , os.path.getctime , os.path.getmtime , os.path.getsize
+示例:
+from os import path
+path.getatime('/tmp/test')
+1458683334.4796343
+文件测试
+os.path.isabs , os.path.isdir , os.path.isfile , os.path.islink 等等
+示例:
+from os import path
+path.isfile('/tmp/test')
+False
+path.isdir('/tmp/test')
+True
+判断文件是否存在:
+from os import path</li>
+</ul>
+
+<p>path.exists('/tmp/test')
+True
+path.exists('/tmp/test2')
+False
+sys
+接下来再简单了解下 sys 模块,主要提供了系统相关的配置和操作,封装了探测、改变解释器 runtime 以及资源的交互。
+解释器相关信息:
+sys.version 得到解释器的版本信息
+sys.platform 得到当前运行平台,如 Linux , Windows 等&gt;&gt;&gt; import sys
+sys.platform
+'linux2'
+运行时环境 :
+sys.argv 获取传递给脚本的参数,参数解析类似于 bash 的方式,第一个参数代表脚本本身
+[root@localhost ~]# python arg.py 1 2 3 4 5
+['arg.py', '1', '2', '3', '4', '5']
+[root@localhost ~]# cat arg.py</p>
+
+<h1>
+<a id="usrbinenv-python-12" class="anchor" href="#usrbinenv-python-12" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>import sys
+print sys.argv
+[root@localhost ~]#
+sys.stderr , sys.stdin , sys.stdout 这些都分别代表一个文件对象
+示例:
+[root@localhost ~]# cat err.py</p>
+
+<h1>
+<a id="usrbinenv-python-13" class="anchor" href="#usrbinenv-python-13" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>import sys
+print &gt;&gt; sys.stderr,"I am error"</p>
+
+<h1>
+<a id="执行脚本并重定向标准输出和标准错误" class="anchor" href="#%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC%E5%B9%B6%E9%87%8D%E5%AE%9A%E5%90%91%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA%E5%92%8C%E6%A0%87%E5%87%86%E9%94%99%E8%AF%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>执行脚本,并重定向标准输出和标准错误</h1>
+
+<p>[root@localhost ~]# python err.py
+I am error
+[root@localhost ~]# python err.py &gt; /tmp/1.log
+I am error
+[root@localhost ~]# cat /tmp/1.log
+[root@localhost ~]# python err.py 2&gt; /tmp/1.log
+[root@localhost ~]# cat /tmp/1.log
+I am error</p>
+
+<h1>
+<a id="解释清楚为什么会出现上面的情形" class="anchor" href="#%E8%A7%A3%E9%87%8A%E6%B8%85%E6%A5%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0%E4%B8%8A%E9%9D%A2%E7%9A%84%E6%83%85%E5%BD%A2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>解释清楚,为什么会出现上面的情形</h1>
+
+<p>练习
+输出给定路径下的所有以 .log 结尾的文件</p>
+
+<h1>
+<a id="usrbinenv-python-14" class="anchor" href="#usrbinenv-python-14" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>import os
+import sys
+def findLogFile(path):
+'''find log file'''
+for filename in os.listdir(path):
+if filename.endswith((".log",".log.log")):
+yield filename
+if <strong>name</strong> == "<strong>main</strong>":
+for f in findLogFile(sys.argv[1]):
+print f
+[root@walter doc]# python dirlog.py /var/log/
+wpa_supplicant.log
+yum.log
+boot.log
+异常处理
+当程序运行过程中出错的时候,捕捉到该错误,并执行一些相应的自定义操作。
+用法:
+try:
+expression
+except [ex...]:
+expression</p>
+
+<h1>
+<a id="try-语句有异常发生后执行-excepttry" class="anchor" href="#try-%E8%AF%AD%E5%8F%A5%E6%9C%89%E5%BC%82%E5%B8%B8%E5%8F%91%E7%94%9F%E5%90%8E%E6%89%A7%E8%A1%8C-excepttry" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>try 语句有异常发生后执行 excepttry:</h1>
+
+<p>expression
+except:
+expression
+finally:
+exrepssion</p>
+
+<h1>
+<a id="无论异常是否发生都会执行-finally-语句块" class="anchor" href="#%E6%97%A0%E8%AE%BA%E5%BC%82%E5%B8%B8%E6%98%AF%E5%90%A6%E5%8F%91%E7%94%9F%E9%83%BD%E4%BC%9A%E6%89%A7%E8%A1%8C-finally-%E8%AF%AD%E5%8F%A5%E5%9D%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>无论异常是否发生都会执行 finally 语句块</h1>
+
+<p>raise error(message) 触发异常
+assert condition,message 当condition 表达式为 false 的时候触发一个异常,message 为要打印出的异常信息,触发异常后并终止程序
+简要的异常分类举例:
+a[1] 如果 a 没有定义,则触发NameError
+a=2;a[1] 此时会触发一个TypeError
+a=[2];a[1] 触发一个IndexError
+a={};a[1] 触发一个KeyError
+raise IndexError 触发一个异常
+assert False,"error occur" 条件触发一个异常 , 并打印异常信息
+示例:</p>
+
+<h2>
+<a id="in-1-a1" class="anchor" href="#in-1-a1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>In [1]: a[1]</h2>
+
+<p>NameError
+Traceback (most recent call last)
+ in ()
+----&gt; 1 a[1]
+NameError: name 'a' is not defined</p>
+
+<h1>
+<a id="由于并没有定义变量-a-所以会触发一个-nameerror-的异常" class="anchor" href="#%E7%94%B1%E4%BA%8E%E5%B9%B6%E6%B2%A1%E6%9C%89%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F-a-%E6%89%80%E4%BB%A5%E4%BC%9A%E8%A7%A6%E5%8F%91%E4%B8%80%E4%B8%AA-nameerror-%E7%9A%84%E5%BC%82%E5%B8%B8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>由于并没有定义变量 a, 所以会触发一个 NameError 的异常</h1>
+
+<h1>
+<a id="后边的就是打印出的异常信息" class="anchor" href="#%E5%90%8E%E8%BE%B9%E7%9A%84%E5%B0%B1%E6%98%AF%E6%89%93%E5%8D%B0%E5%87%BA%E7%9A%84%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>后边的就是打印出的异常信息</h1>
+
+<p>使用raise 手动触发一个NameError 异常:</p>
+
+<h2>
+<a id="in-2-raise-nameerroroopserror" class="anchor" href="#in-2-raise-nameerroroopserror" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>In [2]: raise NameError("Oops,error")</h2>
+
+<p>NameError
+Traceback (most recent call last)
+ in ()
+----&gt; 1 raise NameError("Oops,error")
+NameError: Oops,error
+在程序中手动产生异常:</p>
+
+<h1>
+<a id="usrbinenv-python-15" class="anchor" href="#usrbinenv-python-15" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>try:
+a = [0,1]
+print a[1]</p>
+
+<h1>
+<a id="raise-indexerrorerror-如果执行了这一句则下一句的-assert-语句就不会执行" class="anchor" href="#raise-indexerrorerror-%E5%A6%82%E6%9E%9C%E6%89%A7%E8%A1%8C%E4%BA%86%E8%BF%99%E4%B8%80%E5%8F%A5%E5%88%99%E4%B8%8B%E4%B8%80%E5%8F%A5%E7%9A%84-assert-%E8%AF%AD%E5%8F%A5%E5%B0%B1%E4%B8%8D%E4%BC%9A%E6%89%A7%E8%A1%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>raise IndexError("error")# 如果执行了这一句,则下一句的 assert 语句就不会执行</h1>
+
+<p>assert a[1] == 0,"assert error"
+except Exception,e:
+print "except:"
+print e
+finally:
+print "finally"</p>
+
+<h1>
+<a id="finally-是一个可选的语句块但是在有些情况下最好要有的" class="anchor" href="#finally-%E6%98%AF%E4%B8%80%E4%B8%AA%E5%8F%AF%E9%80%89%E7%9A%84%E8%AF%AD%E5%8F%A5%E5%9D%97%E4%BD%86%E6%98%AF%E5%9C%A8%E6%9C%89%E4%BA%9B%E6%83%85%E5%86%B5%E4%B8%8B%E6%9C%80%E5%A5%BD%E8%A6%81%E6%9C%89%E7%9A%84" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>finally 是一个可选的语句块,但是在有些情况下最好要有的,</h1>
+
+<h1>
+<a id="比如打开了一个文件对文件进行操作不管异常是否出现都必须得关闭文件" class="anchor" href="#%E6%AF%94%E5%A6%82%E6%89%93%E5%BC%80%E4%BA%86%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%AF%B9%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C%E4%B8%8D%E7%AE%A1%E5%BC%82%E5%B8%B8%E6%98%AF%E5%90%A6%E5%87%BA%E7%8E%B0%E9%83%BD%E5%BF%85%E9%A1%BB%E5%BE%97%E5%85%B3%E9%97%AD%E6%96%87%E4%BB%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>比如打开了一个文件,对文件进行操作,不管异常是否出现都必须得关闭文件。</h1>
+
+<p>提高篇
+数据结构
+前面已经讲过了 Python 内置的几个数据结构: list,set,dict,tuple
+下边要介绍一些非内置的数据结构。以标准库的形式提供。
+案例 1 ,需要处理一个日志文件,当前文件的某一行包含你指定的关键字时,你需要返回这一行的前 N 行内容。
+这种情况在监控日志的时候经常有此需求,比如你监控某个服务产生的日志,当某一行出现了 "exception" 关键字,但仅仅看到 exception 这一行,对运维来说
+帮助并不大;这个时候你就需要输出这一行的前面几行的日志内容用来分析。
+Python 实现了一个高效的deque 模块,实现双向队列,可以从两端入队或者出队。
+deque 是 Python 的一个标准库,是由 C 语言开发而成,所以它的效率相当高。
+先简单查看下该模块的帮助信息:
+In [1]: from collections import deque
+In [2]: help(deque)
+class deque(<strong>builtin</strong>.object)
+| deque([iterable[, maxlen]]) --&gt; deque object
+|
+| Build an ordered collection with optimized access from its endpoints.
+|
+| Methods defined here:</p>
+
+<h1>
+<a id="由帮助信息可以简单的看到该模块的构造函数接收两个可选参数-iterable-一个可迭代的元素若指定这个参数-deque-模块会将该元素指定的值添加到队列中-maxlen-参数该参数指定队列的最大长度" class="anchor" href="#%E7%94%B1%E5%B8%AE%E5%8A%A9%E4%BF%A1%E6%81%AF%E5%8F%AF%E4%BB%A5%E7%AE%80%E5%8D%95%E7%9A%84%E7%9C%8B%E5%88%B0%E8%AF%A5%E6%A8%A1%E5%9D%97%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%8E%A5%E6%94%B6%E4%B8%A4%E4%B8%AA%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0-iterable-%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%BF%AD%E4%BB%A3%E7%9A%84%E5%85%83%E7%B4%A0%E8%8B%A5%E6%8C%87%E5%AE%9A%E8%BF%99%E4%B8%AA%E5%8F%82%E6%95%B0-deque-%E6%A8%A1%E5%9D%97%E4%BC%9A%E5%B0%86%E8%AF%A5%E5%85%83%E7%B4%A0%E6%8C%87%E5%AE%9A%E7%9A%84%E5%80%BC%E6%B7%BB%E5%8A%A0%E5%88%B0%E9%98%9F%E5%88%97%E4%B8%AD-maxlen-%E5%8F%82%E6%95%B0%E8%AF%A5%E5%8F%82%E6%95%B0%E6%8C%87%E5%AE%9A%E9%98%9F%E5%88%97%E7%9A%84%E6%9C%80%E5%A4%A7%E9%95%BF%E5%BA%A6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>由帮助信息,可以简单的看到,该模块的构造函数接收两个可选参数, iterable 一个可迭代的元素,若指定这个参数, deque 模块会将该元素指定的值添加到队列中; maxlen 参数,该参数指定队列的最大长度</h1>
+
+<p>具体实现代码:</p>
+
+<h1>
+<a id="usrbinenv-python-16" class="anchor" href="#usrbinenv-python-16" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>import sys
+from collections import deque # 引入 deque 队列模块
+def search(f,pattern,keepNum):
+''' if find keywords,return the line and preLines'''
+preLines = deque(maxlen=keepNum)# 定义该队列所能保存的最大长度
+for line in f:</p>
+
+<h1>
+<a id="如果当前行包含指定的关键字就返回当前行和队列中保存的数据" class="anchor" href="#%E5%A6%82%E6%9E%9C%E5%BD%93%E5%89%8D%E8%A1%8C%E5%8C%85%E5%90%AB%E6%8C%87%E5%AE%9A%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97%E5%B0%B1%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E8%A1%8C%E5%92%8C%E9%98%9F%E5%88%97%E4%B8%AD%E4%BF%9D%E5%AD%98%E7%9A%84%E6%95%B0%E6%8D%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>如果当前行包含指定的关键字,就返回当前行,和队列中保存的数据</h1>
+
+<p>if pattern in line:
+yield line,preLines
+preLines.append(line)# 如果当前行没有包含指定的关键字,将当前行保存到队列中
+if <strong>name</strong> == '<strong>main</strong>':
+logFile = sys.argv[1]
+pattern = sys.argv[2]
+keepNum = int(sys.argv[3])
+with open(logFile) as f:</p>
+
+<h1>
+<a id="search-此时是一个生成器函数直接遍历即可" class="anchor" href="#search-%E6%AD%A4%E6%97%B6%E6%98%AF%E4%B8%80%E4%B8%AA%E7%94%9F%E6%88%90%E5%99%A8%E5%87%BD%E6%95%B0%E7%9B%B4%E6%8E%A5%E9%81%8D%E5%8E%86%E5%8D%B3%E5%8F%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>search 此时是一个生成器函数,直接遍历即可</h1>
+
+<p>for line,preLines in search(f,pattern,keepNum):</p>
+
+<h1>
+<a id="循环输出队列中保存的内容也就是所匹配到的行的前-n-行的内容" class="anchor" href="#%E5%BE%AA%E7%8E%AF%E8%BE%93%E5%87%BA%E9%98%9F%E5%88%97%E4%B8%AD%E4%BF%9D%E5%AD%98%E7%9A%84%E5%86%85%E5%AE%B9%E4%B9%9F%E5%B0%B1%E6%98%AF%E6%89%80%E5%8C%B9%E9%85%8D%E5%88%B0%E7%9A%84%E8%A1%8C%E7%9A%84%E5%89%8D-n-%E8%A1%8C%E7%9A%84%E5%86%85%E5%AE%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>循环输出队列中保存的内容,也就是所匹配到的行的前 N 行的内容</h1>
+
+<p>for pline in preLines:
+print pline</p>
+
+<h1>
+<a id="输出当前所匹配到行的内容" class="anchor" href="#%E8%BE%93%E5%87%BA%E5%BD%93%E5%89%8D%E6%89%80%E5%8C%B9%E9%85%8D%E5%88%B0%E8%A1%8C%E7%9A%84%E5%86%85%E5%AE%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>输出当前所匹配到行的内容</h1>
+
+<p>print line
+print '***<em>'</em>10</p>
+
+<h1>
+<a id="执行该脚本" class="anchor" href="#%E6%89%A7%E8%A1%8C%E8%AF%A5%E8%84%9A%E6%9C%AC" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>执行该脚本</h1>
+
+<p>[root@walter doc]# python dq.py /var/log/messages Shutdown 5
+案例 2 、
+有一些 task ,需要保存到字典中, key 为名称, value 为内容,但是执行的时候,需要保持存储时的顺序
+解决思路:要是使用正常的字典话,将数据保存到字典中,但是读出数据的时候,次序将是无法预测的,及正常的字典返回数据的时候是无序的。
+OrderedDict 有序字典 , 可以按照保存数据的顺序来存储数据。
+正常字典无序验证:
+In [1]: dic = dict()
+In [2]: dic['foo'] = 1
+In [3]: dic['bar'] = 2
+In [4]: dic['fizz'] = 3
+In [5]: dic['tom'] = 180In [6]: dic['jerry'] = 250
+In [7]: dic
+Out[7]: {'bar': 2, 'fizz': 3, 'foo': 1, 'jerry': 250, 'tom': 180}# 可以看到输出数据的时候并不是保存数据时候的顺序了
+In [8]: dic.keys()
+Out[8]: ['tom', 'foo', 'bar', 'jerry', 'fizz']#key 也是无序保存
+In [9]: dic.values()
+Out[9]: [180, 1, 2, 250, 3]# 值也是无序的
+OrderedDict 有序字典:
+In [10]: from collections import OrderedDict
+In [11]: od = OrderedDict()
+In [12]: od['foo'] = 1
+In [13]: od['bar'] = 2
+In [14]: od['fizz'] = 3
+In [15]: od['tom'] = 180
+In [16]: od
+Out[16]: OrderedDict([('foo', 1), ('bar', 2), ('fizz', 3), ('tom', 180)])# 数据的顺序就是当时保存的时候的顺序
+In [17]: od.keys()
+Out[17]: ['foo', 'bar', 'fizz', 'tom']#key 是有序的
+In [18]: od.values()
+Out[18]: [1, 2, 3, 180]# 值也是有序的
+这个模块一般应用在,某些数据输出的时候,需要与保存的顺序一致。
+案例 3
+统计一篇文章中出现频率最高的前 10 个单词,(英文文章)
+Counter 模块,是字典的一个子类,用来计数的一个模块。接收一个序列作为初始化参数。它有一个方法为most_common() 出现次数最多的前 N 项。</p>
+
+<h1>
+<a id="usrbinenc-python" class="anchor" href="#usrbinenc-python" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/enc python</h1>
+
+<p>import sys
+import re
+from collections import Counter
+with open(sys.argv[1]) as f:</p>
+
+<h1>
+<a id="注意这里一次读入全部的内容" class="anchor" href="#%E6%B3%A8%E6%84%8F%E8%BF%99%E9%87%8C%E4%B8%80%E6%AC%A1%E8%AF%BB%E5%85%A5%E5%85%A8%E9%83%A8%E7%9A%84%E5%86%85%E5%AE%B9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>注意这里一次读入全部的内容</h1>
+
+<p>worlds = re.findall(r"\w+",f.read().lower())
+print Counter(worlds).most_common(10)
+[root@walter doc]# python c.py /var/log/messages
+[('walter', 4062), ('mar', 4058), ('27', 3700), ('kernel', 2926), ('17', 1902), ('29', 1877), ('06', 1731), ('48', 1631), ('0', 1488), ('42', 1174)]
+案例 4
+需要从一个 CSV 的文件里读入数据, CSV 文件的第一行是字段名,希望读入的数据可以根据字段名来访问。
+Python 的标准库里面已经提供了一个解决方案,namedtuple 命名元组 , 而且标准库里也提供了针对 csv 操作的模块 m csv .
+In [1]: import csv
+In [2]: from collections import namedtuple
+In [3]: reader = csv.reader(open('./t.csv'))# 打开 csv 文件,生成一个 csv 的 reader 对象 , 找个对象就是一个迭代器
+In [4]: fieds = reader.next() # 先读取迭代器中第一个元素,也就是 csv 文件中的第一行内容
+In [5]: fieds
+Out[5]: ['name', 'gender', 'age', 'salary']# 会将每一行的内容按照分隔符 "," 拆分成一个 list, 即每行内容都会拆分成一个 list
+In [6]: Contact = namedtuple("Contact",fieds)# 生成一个明明元组 , 第一个参数 "Contact" 可以与中等号左边的变量名称不一样
+In [7]: ContactOut[7]: <strong>main</strong>.Contact
+In [8]: type(Contact)# 它的类型还是 type
+Out[8]: type
+In [9]: c = Contact(*reader.next())# 继续迭代下一行内容。此时读取出来的应该是 csv 文件中的第二行内容,是一个 list
+In [10]: c.name
+Out[10]: 'walt0er'
+In [11]: c.gender
+Out[11]: '1'
+In [12]: c.salary
+Out[12]: '1000002'
+In [13]: type(c) #c 的类型为 Contact
+Out[13]: <strong>main</strong>.Contact</p>
+
+<h1>
+<a id="查看-namedtuple-帮助并解释" class="anchor" href="#%E6%9F%A5%E7%9C%8B-namedtuple-%E5%B8%AE%E5%8A%A9%E5%B9%B6%E8%A7%A3%E9%87%8A" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>查看 namedtuple 帮助,并解释</h1>
+
+<p>namedtuple(typename, field_names, verbose=False, rename=False)</p>
+
+<h1>
+<a id="由此可以看出-namedtuple-的构造函数第一个参数为类型名" class="anchor" href="#%E7%94%B1%E6%AD%A4%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%87%BA-namedtuple-%E7%9A%84%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E4%B8%BA%E7%B1%BB%E5%9E%8B%E5%90%8D" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>由此可以看出, namedtuple 的构造函数,第一个参数为类型名,</h1>
+
+<h1>
+<a id="也就是说命名元组其实是创造了一个新的类型出来" class="anchor" href="#%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%AF%B4%E5%91%BD%E5%90%8D%E5%85%83%E7%BB%84%E5%85%B6%E5%AE%9E%E6%98%AF%E5%88%9B%E9%80%A0%E4%BA%86%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%87%BA%E6%9D%A5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>也就是说命名元组其实是创造了一个新的类型出来;</h1>
+
+<h1>
+<a id="第二个参数为字段名相当于这个新造出来的类型的属性名" class="anchor" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0%E4%B8%BA%E5%AD%97%E6%AE%B5%E5%90%8D%E7%9B%B8%E5%BD%93%E4%BA%8E%E8%BF%99%E4%B8%AA%E6%96%B0%E9%80%A0%E5%87%BA%E6%9D%A5%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%B1%9E%E6%80%A7%E5%90%8D" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>第二个参数为字段名,相当于这个新造出来的类型的属性名;</h1>
+
+<h1>
+<a id="后边两个是可选参数" class="anchor" href="#%E5%90%8E%E8%BE%B9%E4%B8%A4%E4%B8%AA%E6%98%AF%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>后边两个是可选参数</h1>
+
+<p>Returns a new subclass of tuple with named fields.
+Point = namedtuple('Point', ['x', 'y'])
+Point.<strong>doc</strong></p>
+
+<h1>
+<a id="docstring-for-the-new-class" class="anchor" href="#docstring-for-the-new-class" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>docstring for the new class</h1>
+
+<p>'Point(x, y)'
+p = Point(11, y=22)</p>
+
+<h1>
+<a id="instantiate-with-positional-args-or-keywords" class="anchor" href="#instantiate-with-positional-args-or-keywords" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>instantiate with positional args or keywords</h1>
+
+<p>p[0] + p[1]</p>
+
+<h1>
+<a id="indexable-like-a-plain-tuple" class="anchor" href="#indexable-like-a-plain-tuple" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>indexable like a plain tuple</h1>
+
+<p>33
+x, y = p</p>
+
+<h1>
+<a id="unpack-like-a-regular-tuple" class="anchor" href="#unpack-like-a-regular-tuple" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>unpack like a regular tuple</h1>
+
+<p>x, y
+(11, 22)
+p.x + p.y</p>
+
+<h1>
+<a id="fields-also-accessable-by-name" class="anchor" href="#fields-also-accessable-by-name" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>fields also accessable by name</h1>
+
+<p>33
+d = p._asdict()</p>
+
+<h1>
+<a id="convert-to-a-dictionary" class="anchor" href="#convert-to-a-dictionary" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>convert to a dictionary</h1>
+
+<p>d['x']
+11
+Point(**d)</p>
+
+<h1>
+<a id="convert-from-a-dictionary" class="anchor" href="#convert-from-a-dictionary" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>convert from a dictionary</h1>
+
+<p>Point(x=11, y=22)
+p._replace(x=100)</p>
+
+<h1>
+<a id="_replace-is-like-strreplace-but-targets-named-fields" class="anchor" href="#_replace-is-like-strreplace-but-targets-named-fields" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>_replace() is like str.replace() but targets named fields</h1>
+
+<p>Point(x=100, y=22)</p>
+
+<h1>
+<a id="再看一下创造出来的那个-contact-到底是个什么样的类型" class="anchor" href="#%E5%86%8D%E7%9C%8B%E4%B8%80%E4%B8%8B%E5%88%9B%E9%80%A0%E5%87%BA%E6%9D%A5%E7%9A%84%E9%82%A3%E4%B8%AA-contact-%E5%88%B0%E5%BA%95%E6%98%AF%E4%B8%AA%E4%BB%80%E4%B9%88%E6%A0%B7%E7%9A%84%E7%B1%BB%E5%9E%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>再看一下创造出来的那个 Contact 到底是个什么样的类型:</h1>
+
+<p>class Contact(<strong>builtin</strong>.tuple)
+| Contact(name, gender, age, salary)
+|# 由此可见 Contact 是 tuple 的一个子类,其构造函数需要四个参数,这四个参数也就是 CSV 文件的第一行内容,生成 Contact 类型的时候传递进来的。
+| Method resolution order:
+|
+Contact
+|
+<strong>builtin</strong>.tuple
+|
+<strong>builtin</strong>.object
+|
+| Methods defined here:</p>
+
+<h1>
+<a id="完整的脚本代码" class="anchor" href="#%E5%AE%8C%E6%95%B4%E7%9A%84%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>完整的脚本代码:</h1>
+
+<h1>
+<a id="usrbinenv-python-17" class="anchor" href="#usrbinenv-python-17" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>import sys
+import csv
+from collections import namedtuple
+contacts = list()# 空列表用来保存最后的结果
+with open(sys.argv[1],'rv') as f:
+reader = csv.reader(f)
+Contact = namedtuple("Contact",reader.next())
+for line in reader:
+contacts.append(Contact(*line))
+print contacts
+[root@walter doc]# python n.py t.csv
+[Contact(name='walt0er', gender='1', age='100', salary='1000002'), Contact(name='wal9ter', gender='1', age='100', salary='1000002'), Contact(name='walter', ge运维相关
+文件目录操作
+之前已经介绍过一些 Python 对文件的操作,这里从运维的角度再了解下。
+os 模块。
+创建目录,os.mkdir
+In [4]: import os
+In [5]: os.mkdir('/tmp/testdir',0644)#0644 创建目录的权限
+In [6]: ll /tmp/
+total 16
+-rw-r--r--. 1 root
+-rw-r--r--. 1 root
+-rw-r--r--. 1 root
+drw-r--r--. 2 root
+-rw-r--r--. 1 root
+12
+12
+77
+6
+66
+Apr
+Apr
+Apr
+Apr
+Apr
+3
+3
+3
+6
+3
+01:29
+01:29
+05:40
+07:03
+01:43
+error.log
+out.log
+test2.log
+testdir/
+test.log
+递归创建目录。类似mkdir -p 操作,os.makedirs
+In [8]: os.makedirs('/tmp/t1/t2/t3')
+删除目录,os.rmdir
+In [11]: os.rmdir('/tmp/testdir/')
+os 模块中暂时没有提供删除非空目录的操作。
+修改权限,os.chmod , 类似于chmod 命令
+In [13]: os.chmod('/tmp/t1',0777)
+In [14]: ll -d /tmp/t1
+drwxrwxrwx. 3 root 15 Apr
+6 07:06 /tmp/t1/
+os.chown
+In [17]: os.chown('/tmp/t1',500,500)# 后边两个参数分别为 UID 和 GID
+In [18]: ll -d /tmp/t1
+drwxrwxrwx. 3 500 15 Apr
+6 07:06 /tmp/t1/
+os.stat 与stat 命令一样
+In [19]: os.stat('/tmp/t1')
+Out[19]: posix.stat_result(st_mode=16895, st_ino=17822857, st_dev=64768L, st_nlink=3, st_uid=500, st_gid=500, st_size=15, st_atime=1459897900, st_mtime=1459897
+其他相关方法os.getlogin() , os.getgid() , os.getuid() , os.getpid() 等
+shutil 模块介绍
+该模块简单来说是用来复制、归档文件和目录的。
+shutil.copyfile(src,dst) 复制一个文件
+shutil.copymod(src,dst) 复制文件权限 , 将文件权限同步到其他文件
+shutil.copy(src,dst) 源必须是文件,但是 dst 可以是文件或者目录,与cp 类似</p>
+
+<h2>
+<a id="in-24-shutilcopytdirtmptdir-为目录" class="anchor" href="#in-24-shutilcopytdirtmptdir-%E4%B8%BA%E7%9B%AE%E5%BD%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>In [24]: shutil.copy('tdir','/tmp/')#tdir 为目录</h2>
+
+<p>IOError
+Traceback (most recent call last)
+ in ()
+----&gt; 1 shutil.copy('tdir','/tmp/')
+/usr/lib64/python2.7/shutil.pyc in copy(src, dst)
+117
+if os.path.isdir(dst):
+118
+dst = os.path.join(dst, os.path.basename(src))
+--&gt; 119
+copyfile(src, dst)
+120
+copymode(src, dst)
+121/usr/lib64/python2.7/shutil.pyc in copyfile(src, dst)
+80
+raise SpecialFileError("<code>%s</code> is a named pipe" % fn)
+81
+---&gt; 82
+with open(src, 'rb') as fsrc:
+83
+with open(dst, 'wb') as fdst:
+84
+copyfileobj(fsrc, fdst)
+IOError: [Errno 21] Is a directory: 'tdir'</p>
+
+<h1>
+<a id="copy-文件" class="anchor" href="#copy-%E6%96%87%E4%BB%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>copy 文件</h1>
+
+<p>In [29]: shutil.copy('anaconda-ks.cfg','/tmp/')
+In [30]: ls /tmp/
+anaconda-ks.cfg error.log
+out.log
+t1/
+test2.log
+test.log
+shutil.copy2(src,dst) 与 copy 类似,但是源数据也会复制,类似cp -p 命令,将权限 , 时间戳等源数据也复制过去。
+shutil.copytree(src,dst) 以copy2 的方式递归复制一个目录:
+In [5]: shutil.copytree('/tmp/t1','/tmp/dirt')
+In [6]: ls /tmp/dirt/
+t2/
+shutil.rmtree(path) 递归删除一个目录
+In [7]: shutil.rmtree('/tmp/dirt')
+In [8]: ls /tmp/dirt
+ls: cannot access /tmp/dirt: No such file or directory
+下面简单说一个从 2.7 版本shutil 才开始有的新功能 :
+shutil.make_archive(base_name, format, root_dir=None, base_dir=None, verbose=0, dry_run=0, owner=None, group=None, logger=None) 以什么样
+的格式打包, basename: 打包后的文件名称, format: 以什么样的格式打包, rootdir 压缩的根目录。 base_dir 开始压缩的目录。 rootdir 和 basedir 默认都是当前
+目录。
+In [12]: shutil.make_archive('testarch','bztar','/tmp/t1')
+Out[12]: '/root/doc/testarch.tar.bz2'
+查看都支持哪些打包格式:
+In [13]: shutil.get_archive_formats()
+Out[13]:
+[('bztar', "bzip2'ed tar-file"),
+('gztar', "gzip'ed tar-file"),
+('tar', 'uncompressed tar file'),
+('zip', 'ZIP file')]
+使用 Python 执行 Linux 命令
+os.system , 并没有返回值,是靠副作用产生输出的
+In [15]: os.system('ls -l')
+total 24
+-rw-r--r--. 1 root root 191 Mar 29 07:24 c.py
+-rw-r--r--. 1 root root 262 Mar 31 05:57 dirlog.py
+-rw-r--r--. 1 root root 527 Mar 27 06:44 dq.py
+-rw-r--r--. 1 root root 276 Mar 29 07:55 n.py
+-rw-r--r--. 1 root root 459 Mar 29 07:35 t.csv
+-rw-r--r--. 1 root root 157 Apr 8 07:00 testarch.tar.bz2
+Out[15]: 0#ipython 中 out 表示返回值 , 可见 os.system 返回的是执行命令的退出状态码
+不需要命令返回值的时候,可以使用此函数。
+os.popen 返回一个文件对象
+In [16]: p = os.popen('ls')
+In [17]: p
+Out[17]: 
+In [18]: p.read()
+Out[18]: 'c.py\ndirlog.py\ndq.py\nn.py\nt.csv\ntestarch.tar.bz2\n'
+os.popen2 返回两个文件对象,一个是 stdin, 一个是 stdoutos.popen3 返回三个文件对象 :stdin,stdout,stderr
+i,o,e = os.popen3('ls /tmp2222')# 一个不存在的目录
+i.read()
+Traceback (most recent call last):
+File "", line 1, in 
+IOError: File not open for reading
+o.read()
+''
+e.read()
+'ls: cannot access /tmp2222: No such file or directory\n'
+os.popen4 返回两个文件对象, stdin,stderr 和 stdout 的合并
+i,o = os.popen4('ls /tmp2222')
+o.read()
+'ls: cannot access /tmp2222: No such file or directory\n'
+就目前来看 os.popen4 貌似已经满足日常需求了,但是目前的话, popen 这组函数已经被标记会废弃的函数了,以后某个版本中可能就不存在这些函数了。
+In [3]: os.popen3('ls /tmp222')
+/usr/bin/ipython:1: DeprecationWarning: os.popen3 is deprecated.</p>
+
+<h1>
+<a id="usrbinpython" class="anchor" href="#usrbinpython" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/python</h1>
+
+<p>Use the subprocess module.# 表明已标记为废弃,推荐使用 subprocess
+在 Python 中推荐使用subprocess 模块来执行命令,以上的几个函数都可以通过subprocess 模块里的某个方法来模拟。
+subprocess.Popen(args, stdin=None, stdout=None, stderr=None, shell=False) 这里面只列出几个常用的参数:
+args 需要执行的命令,可以是一个序列,如['ls','-l'] , 也可以是一个字符串 , 如ls -l
+stdin , stdout , stderr 后边跟一个文件对象,将相应的输出重定向到指定的文件中。
+shell 默认为 False, 当为 True 的时候表示打开一个 shell 进程来执行相关的命令。
+示例:
+In [6]: p = subprocess.Popen(['ls','-l'],stdout=open('/tmp/out','w'))# 将标准输出保存到文件中
+In [7]: p
+Out[7]: 
+In [8]: p.returncode
+In [9]: p.wait()# 执行该函数,以使命令执行完毕
+Out[9]: 0
+In [10]: p.returncode# 返回命令执行后的退出码
+Out[10]: 0</p>
+
+<h1>
+<a id="输出结果" class="anchor" href="#%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>输出结果</h1>
+
+<p>In [11]: cat /tmp/out
+total 712
+-rw-------. 1 root root
+996 Mar 24 06:57 anaconda-ks.cfg
+drwxr-xr-x. 2 root root
+91 Apr 8 07:00 doc
+drwxr-xr-x. 7 root root
+60 Apr 3 18:31 python
+-rw-r--r--. 1 root root 722768 Mar 24 07:11 setuptools-20.3.1.zip
+drwxr-xr-x. 2 root root
+6 Apr 6 07:33 tdir
+但是这种方式在日常工作中显的并不那么优雅,每次都要再读取文件,才能获取命令执行的结果。
+示例 2 :
+In [12]: p = subprocess.Popen(['ls','-l'],stdout=subprocess.PIPE)#subprocess.PIPE</p>
+
+<h1>
+<a id="默认情况下-shellfalsepopen-函数会将-args-参数序列的第一个元素作为可执行程序" class="anchor" href="#%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B-shellfalsepopen-%E5%87%BD%E6%95%B0%E4%BC%9A%E5%B0%86-args-%E5%8F%82%E6%95%B0%E5%BA%8F%E5%88%97%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E4%BD%9C%E4%B8%BA%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>默认情况下 shell=False,Popen 函数会将 args 参数序列的第一个元素作为可执行程序,</h1>
+
+<h1>
+<a id="其他元素作为其参数执行" class="anchor" href="#%E5%85%B6%E4%BB%96%E5%85%83%E7%B4%A0%E4%BD%9C%E4%B8%BA%E5%85%B6%E5%8F%82%E6%95%B0%E6%89%A7%E8%A1%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>其他元素作为其参数执行。</h1>
+
+<p>In [13]: p
+Out[13]: 
+In [14]: p.stdout.read()# 读取命令执行结果
+Out[14]: 'total 712\n-rw-------. 1 root root
+注意,以上执行的时候,shell 参数默认都是 False 。
+示例 3:
+996 Mar 24 06:57 anaconda-ks.cfg\ndrwxr-xr-x. 2 root root
+91 Apr
+8 07:00 doc\ndrwxr-xr-x. 7 root rootIn [15]: p = subprocess.Popen(['ls','-l'],stdout=subprocess.PIPE,shell=True)#shell=True 打开一个 shell 执行命令
+In [16]: p.std
+p.stderr p.stdin
+p.stdout
+In [16]: p.stdout.read()# 由返回的结果可以得知,</p>
+
+<h1>
+<a id="当-shelltrue-的时候-args-参数为序列的时候只会执行序列的第一项-ls-l-只执行了-ls" class="anchor" href="#%E5%BD%93-shelltrue-%E7%9A%84%E6%97%B6%E5%80%99-args-%E5%8F%82%E6%95%B0%E4%B8%BA%E5%BA%8F%E5%88%97%E7%9A%84%E6%97%B6%E5%80%99%E5%8F%AA%E4%BC%9A%E6%89%A7%E8%A1%8C%E5%BA%8F%E5%88%97%E7%9A%84%E7%AC%AC%E4%B8%80%E9%A1%B9-ls-l-%E5%8F%AA%E6%89%A7%E8%A1%8C%E4%BA%86-ls" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>当 shell=True 的时候, args 参数为序列的时候,只会执行序列的第一项。 ['ls','-l'] 只执行了 ls</h1>
+
+<p>Out[16]: 'anaconda-ks.cfg\ndoc\npython\nsetuptools-20.3.1.zip\ntdir\n'
+示例 4 :
+In [17]: p = subprocess.Popen('ls -l',stdout=subprocess.PIPE,shell=True)
+In [18]: p.stdout.read()</p>
+
+<h1>
+<a id="shelltrueargs-为字符串的时候-ls--l-将整个字符串作为命令执行" class="anchor" href="#shelltrueargs-%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%97%B6%E5%80%99-ls--l-%E5%B0%86%E6%95%B4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%9C%E4%B8%BA%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>shell=True,args 为字符串的时候 :'ls -l', 将整个字符串作为命令执行</h1>
+
+<p>Out[18]: 'total 712\n-rw-------. 1 root root
+996 Mar 24 06:57 anaconda-ks.cfg\ndrwxr-xr-x. 2 root root
+91 Apr
+8 07:00 doc\ndrwxr-xr-x. 7 root root
+示例 5 :
+[19]: p = subprocess.Popen('ls -l',stdout=subprocess.PIPE)</p>
+
+<h1>
+<a id="这种情况会报错因为-shellfalse-的时候会将整个字符串作为一个可执行程序执行" class="anchor" href="#%E8%BF%99%E7%A7%8D%E6%83%85%E5%86%B5%E4%BC%9A%E6%8A%A5%E9%94%99%E5%9B%A0%E4%B8%BA-shellfalse-%E7%9A%84%E6%97%B6%E5%80%99%E4%BC%9A%E5%B0%86%E6%95%B4%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%9C%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>这种情况会报错,因为 shell=False 的时候,会将整个字符串作为一个可执行程序执行,</h1>
+
+<h1>
+<a id="但此时肯定找不到名为-ls--l-的可执行程序" class="anchor" href="#%E4%BD%86%E6%AD%A4%E6%97%B6%E8%82%AF%E5%AE%9A%E6%89%BE%E4%B8%8D%E5%88%B0%E5%90%8D%E4%B8%BA-ls--l-%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%E7%A8%8B%E5%BA%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>但此时肯定找不到名为 'ls -l' 的可执行程序</h1>
+
+<p>总之,当 shell=True 的时候,会调用系统当前 shell 来执行命令。如 RHEL 下的默认 shell 为 bash 。一般工作上都将 shell 设置为 True ,可以执行 Linux 下的命令,
+如当命令中带有管道符 "|" 的时候。
+在上边的示例中,都是使用p.wait() 函数来等待命令结束的,有时候使用该函数在 Linux 下会产生死锁的现象。stdout=subporcess.PIPE 会在内存中开辟一
+个空间来保存命令执行的结果,这个空间是最大为 64K ,但是当命令执行的输出结果大于 64K 的时候,p.wait() 会一直等待下去。
+示例:
+[root@walter ~]# ulimit -a
+...
+max locked memory
+(kbytes, -l) 64# 最大锁内存为 64K
+...</p>
+
+<h1>
+<a id="产生死锁" class="anchor" href="#%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>产生死锁</h1>
+
+<p>In [12]:cmd = 'dd if=/dev/zero bs=1K count=64 2&gt;/dev/null'# 将错误重定向,只保留标准输出 , 产生一个 64K 大小的输出
+In [13]: p = subprocess.Popen(cmd,stdout=subprocess.PIPE,shell=True)
+In [14]: p.wait()# 执行结果输出为 64K 大小的时候, wait 正常执行
+Out[14]: 0</p>
+
+<h1>
+<a id="大于-64k" class="anchor" href="#%E5%A4%A7%E4%BA%8E-64k" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>大于 64K</h1>
+
+<p>In [16]: cmd = 'dd if=/dev/zero bs=1K count=65 2&gt;/dev/null'
+In [17]: p = subprocess.Popen(cmd,stdout=subprocess.PIPE,shell=True)
+In [18]: p.wait()# 为 65K 的时候, wait 会一直等待下去</p>
+
+<h1>
+<a id="这种情况必须得使用-pcommunicate-函数该函数返回两个值-stdoutstderr" class="anchor" href="#%E8%BF%99%E7%A7%8D%E6%83%85%E5%86%B5%E5%BF%85%E9%A1%BB%E5%BE%97%E4%BD%BF%E7%94%A8-pcommunicate-%E5%87%BD%E6%95%B0%E8%AF%A5%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E4%B8%A4%E4%B8%AA%E5%80%BC-stdoutstderr" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>这种情况必须得使用 p.communicate 函数,该函数返回两个值 (stdout,stderr)</h1>
+
+<p>In [22]: p = subprocess.Popen(cmd,stdout=subprocess.PIPE,shell=True)
+In [23]: o,e = p.communicate()
+In [24]: e
+In [25]: p.returncode
+Out[25]: 0
+执行命令的一个高阶模块:
+sh 这是一个第三方模块,可以将任意 Linux 命令作为 Python 的函数来执行,命令参数作为其参数传入:sh.ls('-l') , 函数返回值是命令的执行结
+果 . sh.ifconfig() 。
+进程管理
+psutil 是一个第三方模块,需要单独安装 : easy_install psutil
+psutil.users() 获取当前系统中登录的用户:
+In [4]: psutil.users()
+Out[4]: [suser(name='root', terminal='pts/0', host='10.25.0.1', started=1460238720.0)]
+psutil.boot_time() 获取系统启动时间
+获取 CPU 使用百分比:
+In [6]: psutil.cpu_percent()Out[6]: 0.4
+获取 CPU 核数:
+In [7]: psutil.cpu_count()
+Out[7]: 1
+获取 CPU 使用的百分比:与top 命令获取的是一样的
+In [10]: psutil.cpu_times_percent()
+Out[10]: scputimes(user=0.1, nice=0.0, system=0.2, idle=99.7, iowait=0.0, irq=0.0, softirq=0.0, steal=0.0, guest=0.0, guest_nice=0.0)
+获取内存信息:
+In [11]: psutil.virtual_memory()
+Out[11]: svmem(total=1025363968, available=816713728, percent=20.3, used=328347648, free=697016320, active=129585152, inactive=81391616, buffers=970752, cached
+获取某个分区使用情况:
+In [19]: psutil.disk_usage('/')
+Out[19]: sdiskusage(total=13914603520, used=1362849792, free=12551753728, percent=9.8)
+glances 这个监控程序就是基于 psutil 这个模块开发的。
+与进程相关的操作方法:
+In [20]: p = psutil.process_iter()</p>
+
+<h1>
+<a id="以迭代器的形式返回系统中所有的进程" class="anchor" href="#%E4%BB%A5%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9A%84%E5%BD%A2%E5%BC%8F%E8%BF%94%E5%9B%9E%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84%E8%BF%9B%E7%A8%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>以迭代器的形式返回系统中所有的进程</h1>
+
+<p>In [21]: p
+Out[21]: 
+In [22]: a = p.next()
+In [23]: a# 返回的第一个进程
+Out[23]: 
+In [24]: a.
+a.as_dict
+a.is_running
+a.pid
+a.children
+a.kill
+a.ppid
+a.cmdline
+a.memory_full_info a.resume
+a.connections
+a.memory_info
+a.rlimit
+a.cpu_affinity
+a.memory_info_ex
+a.send_signal
+a.cpu_percent
+a.memory_maps
+a.status
+a.cpu_times
+a.memory_percent
+a.suspend
+a.create_time
+a.name
+a.terminal
+a.cwd
+a.nice
+a.terminate
+a.environ
+a.num_ctx_switches a.threads
+a.exe
+a.num_fds
+a.uids
+a.gids
+a.num_threads
+a.username
+a.io_counters
+a.open_files
+a.wait
+a.ionice
+a.parent</p>
+
+<h1>
+<a id="针对某个进程所支持的操作" class="anchor" href="#%E9%92%88%E5%AF%B9%E6%9F%90%E4%B8%AA%E8%BF%9B%E7%A8%8B%E6%89%80%E6%94%AF%E6%8C%81%E7%9A%84%E6%93%8D%E4%BD%9C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>针对某个进程所支持的操作</h1>
+
+<p>In [28]: a.exe()# 当前进程的执行程序
+Out[28]: '/usr/lib/systemd/systemd'
+In [30]: a.cpu_times()# 当前进程 CPU 时间的使用
+Out[30]: pcputimes(user=0.25, system=1.79, children_user=1.22, children_system=2.3)
+In [31]: a.pid# 进程 ID
+Out[31]: 1
+/proc 文件系统
+Linux 系统为管理员提供了非常好的方法,使其可以在系统运行时更改内核,而不需要重新引导内核系统,这是通过 /proc 虚拟文件系统实现的。 /proc 文件
+虚拟系统是一种内核和内核模块用来向进程( process )发送信息的机制(所以叫做 “/proc” ),这个伪文件系统允许与内核内部数据结构交互,获取有关进程
+的有用信息,在运行中( on the fly )改变设置(通过改变内核参数)。与其他文件系统不同, /proc 存在于内存而不是硬盘中。 proc
+文件系统提供的信息如下:
+进程信息:系统中的任何一个进程,在 proc 的子目录中都有一个同名的进程 ID ,可以找到 cmdline 、 mem 、 root 、 stat 、 statm ,以及 status 。某些信
+息只有超级用户可见,例如进程根目录。每一个单独含有现有进程信息的进程有一些可用的专门链接,系统中的任何一个进程都有一个单独的自链接指
+向进程信息,其用处就是从进程中获取命令行信息。
+系统信息:如果需要了解整个系统信息中也可以从 /proc/stat 中获得,其中包括 CPU 占用情况、磁盘空间、内存对换、中断等。
+CPU 信息:利用 /proc/CPUinfo 文件可以获得中央处理器的当前准确信息。
+负载信息: /proc/loadavg 文件包含系统负载信息。
+系统内存信息: /proc/meminfo 文件包含系统内存的详细信息,其中显示物理内存的数量、可用交换空间的数量,以及空闲内存的数量等。/proc 目录中的主要文件的说明
+只简单列出几个经常用到监控中的文件
+/proc/cpuinfo CPU 信息
+/proc/loadavg 系统平均负载信息
+/proc/meminfo 内存相关信息,包括物理内存和交换分区
+/proc/swaps 交换分区使用情况
+案例 1 :读取负载信息</p>
+
+<h1>
+<a id="usrbinenv-python-18" class="anchor" href="#usrbinenv-python-18" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>def load_avg():
+loadavg = {}
+with open('/proc/loadavg') as f:
+avg = f.read().split()# 将本行内容以空格分隔为列表
+loadavg['avg_1'] = avg[0]
+loadavg['avg_5'] = avg[1]
+loadavg['avg_15'] = avg[2]
+return loadavg
+if <strong>name</strong> == '<strong>main</strong>':
+for k,v in load_avg().items():
+print k,v
+案例 2: 获取内存使用信息</p>
+
+<h1>
+<a id="usrbinenv-python-19" class="anchor" href="#usrbinenv-python-19" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>from collections import OrderedDict
+def meminfo():
+'''get memory info from /proc/meminfo'''
+info = OrderedDict()</p>
+
+<h1>
+<a id="将读取到的所有内存信息存到一个有序字典里" class="anchor" href="#%E5%B0%86%E8%AF%BB%E5%8F%96%E5%88%B0%E7%9A%84%E6%89%80%E6%9C%89%E5%86%85%E5%AD%98%E4%BF%A1%E6%81%AF%E5%AD%98%E5%88%B0%E4%B8%80%E4%B8%AA%E6%9C%89%E5%BA%8F%E5%AD%97%E5%85%B8%E9%87%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>将读取到的所有内存信息存到一个有序字典里,</h1>
+
+<h1>
+<a id="这样的话以后可以按照存储的顺序直接读取出来" class="anchor" href="#%E8%BF%99%E6%A0%B7%E7%9A%84%E8%AF%9D%E4%BB%A5%E5%90%8E%E5%8F%AF%E4%BB%A5%E6%8C%89%E7%85%A7%E5%AD%98%E5%82%A8%E7%9A%84%E9%A1%BA%E5%BA%8F%E7%9B%B4%E6%8E%A5%E8%AF%BB%E5%8F%96%E5%87%BA%E6%9D%A5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>这样的话,以后可以按照存储的顺序直接读取出来</h1>
+
+<p>with open('/proc/meminfo') as f:
+for line in f:
+fields = line.split(':')
+info[fields[0]] = fields[1].strip()
+return info
+if <strong>name</strong> == '<strong>main</strong>':
+meminfo = meminfo()
+print 'Total memory:{0}'.format(meminfo['MemTotal'])
+print 'Free memory:{0}'.format(meminfo['MemFree'])
+案例 3 :监控 mariadb 进程是否存在</p>
+
+<h1>
+<a id="usrbinenv-python-20" class="anchor" href="#usrbinenv-python-20" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>!/usr/bin/env python</h1>
+
+<p>import os
+def is_mariadb_alive():
+''' monitor mariadb'''
+ret = os.popen('ps -C mysqld -o pid,cmd').readlines()
+return False if len(ret) &lt; 2 else True#python 中实现的类似三元表达式
+if <strong>name</strong> == '<strong>main</strong>':
+print is_mariadb_alive()</p>
+
+<h1>
+<a id="此处也可以加些功能" class="anchor" href="#%E6%AD%A4%E5%A4%84%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%8A%A0%E4%BA%9B%E5%8A%9F%E8%83%BD" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>此处也可以加些功能:</h1>
+
+<h1>
+<a id="如" class="anchor" href="#%E5%A6%82" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>如</h1>
+
+<p>当返回为 False 的时候,表示 mariadb 进程不存在了</p>
+
+<h1>
+<a id="此时需要启动-mariadb--ossystemservice-apache2-restart" class="anchor" href="#%E6%AD%A4%E6%97%B6%E9%9C%80%E8%A6%81%E5%90%AF%E5%8A%A8-mariadb--ossystemservice-apache2-restart" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>此时需要启动 mariadb : os.system("service apache2 restart")</h1>
+
+<p>可能会用到的模块argparse , smtplib 。
+python 操作 MySQL 数据库
+安装
+[root@~]# yum install MySQL-python#ipython 或者 python shell 中测试可以正常导入
+In [1]: import MySQLdb # 不报错,表示安装成功
+在本地书库创建一个库用于测试:
+MariaDB [(none)]&gt; create database testpython;
+Query OK, 1 row affected (0.00 sec)
+连接 MySQL 数据库:
+In [1]: import MySQLdb
+In [2]: conn = MySQLdb.connect(host='localhost',user='root',passwd='123456',db='testpython',port=3306,charset='utf8')
+host : MySQL 数据库地址
+user: 数据库登陆用户名
+passwd: 数据库登陆密码
+db: 登陆数据库后,需要操作的库名
+port: 数据库监听端口,默认为 3306
+charset: 数据库编码
+建立与数据库的连接,其实就是建立了一个MySQLdb.connect() 的实例对象 conn, 这个实例对象常用的操作有:
+commit() 如果数据库表进行了修改,提交保存当前的数据。
+rollback() 如果有权限,就取消当前的操作,否则报错
+cursor() 游标指针。
+连接成功之后,就要开始操作数据库, MySQLdb 用游标 cursor 的方式操作数据库。</p>
+
+<h1>
+<a id="创建一个数据库游标" class="anchor" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B8%B8%E6%A0%87" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>创建一个数据库游标</h1>
+
+<p>In [3]: cur = conn.cursor()
+模块底层其实是调用 CAPI 的,所以,需要先得到当前指向数据库的指针。这也就提醒我们,在操作数据库的时候,指针会移动,如果移动到数据库最后一条
+了,再查,就查不出什么来了 .
+下面用 cursor() 提供的方法来进行操作,方法主要是 :
+1. 执行命令
+2. 接收结果
+cursor 执行命令的方法:
+execute(query, args): 执行单条 sql 语句。 query 为 sql 语句本身, args 为参数值的列表。执行后返回值为受影响的行数。
+executemany(query, args): 执行单条 sql 语句 , 但是重复执行参数列表里的参数 , 返回值为受影响的行数
+首先在数据库创建一个用于测试:
+MariaDB [testpython]&gt; create table member(id int(2) not null primary key auto_increment,username varchar(40),password varchar(20),email varchar(200))default ch</p>
+
+<h1>
+<a id="建表语句" class="anchor" href="#%E5%BB%BA%E8%A1%A8%E8%AF%AD%E5%8F%A5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>建表语句</h1>
+
+<p>CREATE TABLE <code>member</code> (
+<code>id</code> int(2) NOT NULL AUTO_INCREMENT,
+<code>username</code> varchar(40) DEFAULT NULL,
+<code>password</code> varchar(20) DEFAULT NULL,
+<code>email</code> varchar(200) DEFAULT NULL,
+PRIMARY KEY (<code>id</code>)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+插入一条数据,返回值为受影响的行数:
+In [5]: cur.execute("insert into member (username,password,email) values (%s,%s,%s)",("python","123456","<a href="mailto:python@gmail.com">python@gmail.com</a>"))
+Out[5]: 1L
+但是此时并没有完成表真正的 提交:
+MariaDB [testpython]&gt; select * from member;
+Empty set (0.00 sec)
+提交事务:
+In [7]: conn.commit()
+数据成功被保存:
+MariaDB [testpython]&gt; select * from member;+----+----------+----------+------------------+
+| id | username | password | email
+|
++----+----------+----------+------------------+
+| 1 | python
+| 123456
+| <a href="mailto:python@gmail.com">python@gmail.com</a> |
++----+----------+----------+------------------+
+1 row in set (0.00 sec)
+插入多条数据:
+cur.executemany("insert into member (username,password,email) values (%s,%s,%s)",(("google","111222","<a href="mailto:g@gmail.com">g@gmail.com</a>"),("facebook","222333","<a href="mailto:f@face.book">f@face.book</a>"),("g
+4L
+conn.commit()
+日常工作中,大多数会先拼接一个 SQL 语句 然后再执行,实现插入数据的操作:
+In [12]: sql = "INSERT INTO member (username,password,email) values ('%s','%s','%s')" % ('walter.liu','123456','<a href="mailto:zheshiz2@163.com">zheshiz2@163.com</a>')# 注意其中的字符串要带上引号 '%s'
+In [13]: cur.execute(sql)
+Out[13]: 1L
+In [14]: conn.commit()
+查询数据
+查询数据也需要用游标来操作
+In [4]: cur.execute('select * from member')
+Out[4]: 2L # 表示有两条数据被检索出来
+使用游标一下方法,才能取回检索到的数据:
+fetchall(self): 接收全部的返回结果行 .
+fetchmany(size=None): 接收 size 条返回结果行 . 如果 size 的值大于返回的结果行的数量 , 则会返回 cursor.arraysize 条数据 .
+fetchone(): 返回一条结果行 .
+scroll(value, mode='relative'): 移动指针到某一行 . 如果 mode='relative', 则表示从当前所在行移动 value 条 , 如果 mode='absolute', 则表示从结果集的第一行
+移动 value 条
+实例:
+In [5]: lines = cur.fetchall()</p>
+
+<h1>
+<a id="取回的数据被放在一个大的元祖里" class="anchor" href="#%E5%8F%96%E5%9B%9E%E7%9A%84%E6%95%B0%E6%8D%AE%E8%A2%AB%E6%94%BE%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%A4%A7%E7%9A%84%E5%85%83%E7%A5%96%E9%87%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>取回的数据被放在一个大的元祖里,</h1>
+
+<h1>
+<a id="此时游标已经移动到最后一条数据了" class="anchor" href="#%E6%AD%A4%E6%97%B6%E6%B8%B8%E6%A0%87%E5%B7%B2%E7%BB%8F%E7%A7%BB%E5%8A%A8%E5%88%B0%E6%9C%80%E5%90%8E%E4%B8%80%E6%9D%A1%E6%95%B0%E6%8D%AE%E4%BA%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>此时游标已经移动到最后一条数据了</h1>
+
+<h1>
+<a id="如果再执行一次-curfetchall-会返回空" class="anchor" href="#%E5%A6%82%E6%9E%9C%E5%86%8D%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1-curfetchall-%E4%BC%9A%E8%BF%94%E5%9B%9E%E7%A9%BA" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>如果再执行一次 cur.fetchall() 会返回空</h1>
+
+<p>In [6]: lines
+Out[6]:
+((1L, u'python', u'123456', u'<a href="mailto:python@gmail.com">python@gmail.com</a>'),
+(2L, u'walter.liu', u'123456', u'<a href="mailto:zheshiz2@163.com">zheshiz2@163.com</a>'))
+遍历取回的数据:
+In [8]: for line in lines:
+...:
+print line
+...:
+(1L, u'python', u'123456', u'<a href="mailto:python@gmail.com">python@gmail.com</a>')
+(2L, u'walter.liu', u'123456', u'<a href="mailto:zheshiz2@163.com">zheshiz2@163.com</a>')
+更新数据:
+In [11]: cur.execute('UPDATE member SET username="%s" WHERE id=1' % ('php'))
+Out[11]: 1L
+In [12]: cur.execute('SELECT * FROM member WHERE id=1')
+Out[12]: 1L
+In [13]: cur.fetchone()
+Out[13]: (1L, u'php', u'123456', u'<a href="mailto:python@gmail.com">python@gmail.com</a>')</p>
+
+<h1>
+<a id="此时在-python-里看到数据已经被更新但是在数据库中还没有被真正的更新" class="anchor" href="#%E6%AD%A4%E6%97%B6%E5%9C%A8-python-%E9%87%8C%E7%9C%8B%E5%88%B0%E6%95%B0%E6%8D%AE%E5%B7%B2%E7%BB%8F%E8%A2%AB%E6%9B%B4%E6%96%B0%E4%BD%86%E6%98%AF%E5%9C%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E8%BF%98%E6%B2%A1%E6%9C%89%E8%A2%AB%E7%9C%9F%E6%AD%A3%E7%9A%84%E6%9B%B4%E6%96%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>此时在 python 里看到数据已经被更新,但是在数据库中还没有被真正的更新</h1>
+
+<h1>
+<a id="需要执行-commit-提交事务才行" class="anchor" href="#%E9%9C%80%E8%A6%81%E6%89%A7%E8%A1%8C-commit-%E6%8F%90%E4%BA%A4%E4%BA%8B%E5%8A%A1%E6%89%8D%E8%A1%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>需要执行 commit 提交事务才行</h1>
+
+<p>In [14]: conn.commit()# 将数据真正的更新到数据库中
+关于乱码问题:
+可以做如下统一设置:
+Python 文件设置编码 utf-8 (文件前面加上 #encoding=utf-8)MySQL 数据库 charset=utf8 (数据库的设置方法,可以网上搜索)
+Python 连接 MySQL 是加上参数 charset=utf8 (在前面教程中都这么演示了,很重要)
+设置 Python 的默认编码为 utf-8 (sys.setdefaultencoding(utf-8) ,)
+Python 程序:</p>
+
+<h1>
+<a id="encodingutf-8" class="anchor" href="#encodingutf-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>encoding=utf-8</h1>
+
+<p>import sys
+import MySQLdb
+reload(sys)
+sys.setdefaultencoding('utf-8')
+db=MySQLdb.connect(user='root',charset='utf8')
+MySQL 配置:
+[client] default-character-set = utf8
+[mysqld] default-character-set = utf8
+flask 入门
+安装 flask
+[root@walter ~]# easy_install flask</p>
+
+<h1>
+<a id="或者-pip-install-flask" class="anchor" href="#%E6%88%96%E8%80%85-pip-install-flask" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>或者 pip install flask</h1>
+
+<p>定义一个简单的页面: app.py 文件
+<strong>author</strong> = 'liuzhenwei'</p>
+
+<h1>
+<a id="导入-flask-模块" class="anchor" href="#%E5%AF%BC%E5%85%A5-flask-%E6%A8%A1%E5%9D%97" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>导入 flask 模块</h1>
+
+<p>from flask import Flask</p>
+
+<h1>
+<a id="实例化一个-application-对象将当前的模块名称传递进去" class="anchor" href="#%E5%AE%9E%E4%BE%8B%E5%8C%96%E4%B8%80%E4%B8%AA-application-%E5%AF%B9%E8%B1%A1%E5%B0%86%E5%BD%93%E5%89%8D%E7%9A%84%E6%A8%A1%E5%9D%97%E5%90%8D%E7%A7%B0%E4%BC%A0%E9%80%92%E8%BF%9B%E5%8E%BB" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>实例化一个 application 对象,将当前的模块名称传递进去</h1>
+
+<p>app = Flask(<strong>name</strong>)</p>
+
+<h1>
+<a id="在开发的时候-一般将-debug-设置为-true-这样的话修改程序文件后-app-会自动加载" class="anchor" href="#%E5%9C%A8%E5%BC%80%E5%8F%91%E7%9A%84%E6%97%B6%E5%80%99-%E4%B8%80%E8%88%AC%E5%B0%86-debug-%E8%AE%BE%E7%BD%AE%E4%B8%BA-true-%E8%BF%99%E6%A0%B7%E7%9A%84%E8%AF%9D%E4%BF%AE%E6%94%B9%E7%A8%8B%E5%BA%8F%E6%96%87%E4%BB%B6%E5%90%8E-app-%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%8A%A0%E8%BD%BD" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>在开发的时候 ,一般将 debug 设置为 true, 这样的话,修改程序文件后, app 会自动加载。</h1>
+
+<p>app.debug = True</p>
+
+<h1>
+<a id="在-flask-中使用装饰器的方式将请求连接映射到相应的函数" class="anchor" href="#%E5%9C%A8-flask-%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%A3%85%E9%A5%B0%E5%99%A8%E7%9A%84%E6%96%B9%E5%BC%8F%E5%B0%86%E8%AF%B7%E6%B1%82%E8%BF%9E%E6%8E%A5%E6%98%A0%E5%B0%84%E5%88%B0%E7%9B%B8%E5%BA%94%E7%9A%84%E5%87%BD%E6%95%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>在 flask 中使用装饰器的方式,将请求连接映射到相应的函数</h1>
+
+<p>@app.route('/')
+def hello():
+return 'hello world'</p>
+
+<h1>
+<a id="hello-称之为一个视图函数" class="anchor" href="#hello-%E7%A7%B0%E4%B9%8B%E4%B8%BA%E4%B8%80%E4%B8%AA%E8%A7%86%E5%9B%BE%E5%87%BD%E6%95%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>hello 称之为一个视图函数</h1>
+
+<p>if <strong>name</strong> == '<strong>main</strong>':
+app.run('0.0.0.0')</p>
+
+<h1>
+<a id="运行上边声明的-app-默认值为空表示监听-127001-的-500-端口" class="anchor" href="#%E8%BF%90%E8%A1%8C%E4%B8%8A%E8%BE%B9%E5%A3%B0%E6%98%8E%E7%9A%84-app-%E9%BB%98%E8%AE%A4%E5%80%BC%E4%B8%BA%E7%A9%BA%E8%A1%A8%E7%A4%BA%E7%9B%91%E5%90%AC-127001-%E7%9A%84-500-%E7%AB%AF%E5%8F%A3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>运行上边声明的 app, 默认值为空表示,监听 127.0.0.1 的 500 端口</h1>
+
+<h1>
+<a id="在开一个终端运行" class="anchor" href="#%E5%9C%A8%E5%BC%80%E4%B8%80%E4%B8%AA%E7%BB%88%E7%AB%AF%E8%BF%90%E8%A1%8C" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>在开一个终端运行</h1>
+
+<p>[root@walter web]# python app.py</p>
+
+<ul>
+<li>Running on <a href="http://0.0.0.0:5000/">http://0.0.0.0:5000/</a> (Press CTRL+C to quit)</li>
+<li>Restarting with stat</li>
+<li>Debugger is active!</li>
+<li>Debugger pin code: 134-058-099
+浏览器打开 <a href="http://10.25.128.8:5000/">http://10.25.128.8:5000/</a> 。
+接下来以一个简单的博客形式,来讲解后续的内容。
+博客应有的基本功能:
+浏览博客
+发表博客
+这里使用 MySQL 数据库存储博客信息。
+库名为: blog
+posts 表,用来存储博客内容:
+CREATE TABLE <code>posts</code> (
+<code>id</code> int(11) NOT NULL AUTO_INCREMENT,
+<code>title</code> varchar(50) DEFAULT NULL,
+<code>content</code> text,
+PRIMARY KEY (<code>id</code>)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;发表一篇博客:
+相应的视图函数:
+这里需要一个 MySQL 的连接驱动,这个地方使用前面讲过的 MySQLdb 模块。
+在 app.py 文件中,新增一个视图函数
+@app.route('/add',methods=['GET','POST'])
+def add_entry():
+pass
+# 关于装饰器中的 methods 参数
+# 默认不指定的话,表示该连接只接受 GET 请求,
+# 这表示该连接接受 GET 和 POST 两个请求
+# 当用户以 GET 方式请求的时候,页面渲染一个 form 表单,用于发表博客
+# 当用户以 POST 方式请求的时候,表示用户要提交发表的博客内容
+下面丰富 add_entry 函数的功能:
+完整的代码为:
+[root@walter web]# cat app.py
+<strong>author</strong> = 'liuzhenwei'
+from flask import Flask,request
+import MySQLdb
+app = Flask(<strong>name</strong>)
+app.debug = True
+@app.route('/')
+def hello():
+return 'hello world'
+@app.route('/add',methods=['GET','POST'])
+def add_entry():
+# 根据 request 对象的 method 方法,获取当前请求的方式
+if request.method == 'GET':
+# 以 DOC 的形式返回一个 form 表单到页面上。
+return '''
+
+
+My Blog
+
+
+
+Title:
+<br>
+<br>
+Content:
+<br>
+<br>
+
+
+
+
+'''
+if <strong>name</strong> == '<strong>main</strong>':
+app.run('0.0.0.0')
+浏览器: <a href="http://10.25.128.8:5000/add">http://10.25.128.8:5000/add</a>
+到目前为止,页面也可以正常打开,但是此时我们是将 html 代码直接写到 python 函数内的,这种方式相当的傻了。这接下来将其修改为模板的形式。
+在当前目录下创建一个 templates 的目录。里面放置我们需要的 HTML 模板文件。
+[root@walter web]#
+[root@walter web]#
+[root@walter web]#
+total 4
+-rw-r--r--. 1 root
+drwxr-xr-x. 2 root
+mkdir templates
+ll
+root 662 Apr 14 06:28 app.py
+root
+6 Apr 14 06:32 templates
+在 flask 中是约定大于设置的,即 flask 会在 application 所在的目录下,找一个叫 templates 的目录,然后到此目录里找相应的模板文件。不需要在某个配置文件
+中对其进行设置。完整的代码修改为:
+<strong>author</strong> = 'liuzhenwei'
+#render_template 用来加载模板文件
+from flask import Flask,request,render_template
+import MySQLdb
+app = Flask(<strong>name</strong>)
+app.debug = True
+@app.route('/')
+def hello():
+return 'hello world'
+@app.route('/add',methods=['GET','POST'])
+def add_entry():
+if request.method == 'GET':
+return render_template('add_entry.html')
+#render_template 方法,接收一个模板文件名为参数
+# 表示当前要加载的模板文件
+if <strong>name</strong> == '<strong>main</strong>':
+app.run('0.0.0.0')
+add_entry 添加接收提交内容的功能:
+@app.route('/add',methods=['GET','POST'])
+def add_entry():
+if request.method == 'GET':
+return render_template('add_entry.html')
+if request.method == 'POST':
+title = request.form.get('title')
+content = request.form.get('content')
+return '%s,%s' % (title,content)
+打开浏览器,提交内容测试,输入内容,提交,页面可以返回提交的内容表示正常。
+点击提交后:
+到目前为止,程序可以正常接收我们从页面提交的内容了,接下来需要将内容保存到数据库中:
+@app.route('/add',methods=['GET','POST'])
+def add_entry():
+if request.method == 'GET':
+return render_template('add_entry.html')
+if request.method == 'POST':
+title = request.form.get('title')
+content = request.form.get('content')
+# 创建一个数据连接
+conn = MySQLdb.connect(host='localhost',user='root',passwd='',db='blog')
+# 创建游标cur = conn.cursor()
+# 拼接 SQL 语句
+sql = "INSERT INTO posts (title,content) VALUES ('%s','%s')" %(title,content)
+# 执行 SQL
+cur.execute(sql)
+# 提交事务
+conn.commit()
+# 关闭游标
+cur.close()
+# 关闭连接
+conn.close()
+# 在视图函数中,必须得 return 一个值,否则会报错
+if r is not None:
+return 'submit ok'
+else:
+return 'submit error'
+提交测试:
+查看数据库:
+MariaDB [blog]&gt; select * from posts;
++----+-------+---------+
+| id | title | content |
++----+-------+---------+
+| 1 | aaaa | dddddd |
++----+-------+---------+
+1 row in set (0.00 sec)
+到目前为止,可以正常发表一篇文章了,接下来需要完成显示文章的列表。 新增 index 视图方法。
+@app.route('/')
+def index():
+conn = MySQLdb.connect(host='localhost',user='root',passwd='',db='blog')
+cur = conn.cursor()
+sql = "SELECT id,title FROM posts ORDER BY id DESC"
+try:
+cur.execute(sql)
+posts = cur.fetchall()
+except Exception,e:
+return e
+finally:
+cur.close()
+conn.close()
+return render_template('index.html',posts=posts)# 渲染模板,并将数据传递到模板里
+index.html 内容
+&lt;!DOCTYPE html&gt;
+
+
+
+MyBlog
+
+
+<ul>
+&lt;!--jinja2 模板语法 --&gt;
+{% for post in posts %}
+<li>{{ post[1] }}</li>
+{% endfor %}
+</ul>
+
+
+浏览器打开,访问首页:显示博客详情页面:
+@app.route('/detail')
+def detail():
+# 接收从 URL 以 GET 方式传递的值,需要用 request.args
+p_id = request.args.get('id')
+conn = MySQLdb.connect(host='localhost',user='root',passwd='',db='blog')
+cur = conn.cursor()
+sql = "SELECT id,title,content FROM posts WHERE id=%d" % int(p_id)
+try:
+cur.execute(sql)
+post = cur.fetchone()
+except Exception,e:
+return e
+finally:
+cur.close()
+conn.close()
+return render_template('detail.html',post=post)
+创建模板文件: detail.html
+&lt;!DOCTYPE html&gt;
+
+
+
+{{ post[1] }}
+
+
+<h2>
+<a id="-post1-" class="anchor" href="#-post1-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>{{ post[1] }}</h2>
+<hr>
+<p>
+{{ post[2] }}
+</p>
+
+
+浏览器打开页面:
+<a href="http://10.25.128.8:5000/detail?id=2">http://10.25.128.8:5000/detail?id=2</a> ,这种方式是以 query string 的方式传递的参数,看起来不是那么好看,对搜索引擎也是不是很友好。我们平时见到的好
+多连接基本上都是 : <a href="http://10.25.128.8:5000/detail/2">http://10.25.128.8:5000/detail/2</a> 这种方式:
+修改视图函数:
+#int:p_id 表示一个占位符, int 表示此处变量的类型, p_id 变量名,占位符如果不加类型,默认为 str
+@app.route('/detail/int:p_id')
+# 直接以参数的形式传递给视图函数
+def detail(p_id):
+#p_id = request.args.get('id')# 这一行不再需要
+conn = MySQLdb.connect(host='localhost',user='root',passwd='',db='blog')
+cur = conn.cursor()
+sql = "SELECT id,title,content FROM posts WHERE id=%d" % int(p_id)
+try:
+cur.execute(sql)
+post = cur.fetchone()except Exception,e:
+return e
+finally:
+cur.close()
+conn.close()
+return render_template('detail.html',post=post)
+浏览器打开
+<a href="http://10.25.128.8:5000/detail/2">http://10.25.128.8:5000/detail/2</a>
+修改列表也,加上链接:
+&lt;!DOCTYPE html&gt;
+
+
+
+MyBlog
+
+
+<ul>
+&lt;!--jinja2 模板语法 --&gt;
+{% for post in posts %}
+<li><a href="%7B%7B%20url_for(">
+&lt;!-- 这里的 url_for 可以根据提供的视图函数,反向解除对应的 URL 链接。后边直接跟要传递的参数即可 , 这样的话,无论视图函数里面的路由路径怎么变,都会根据视
+{{ post[1] }}</a></li>
+{% endfor %}
+</ul>
+
+
+到目前为止,基本的博客功能是实现了,但是在视图函数中,每个函数都有一个数据库连接的操作,过于重复。修改的时候也很麻烦,不符合当代编程的规
+范。
+在 flask 中有两个较为有用的视图函数:
+@app.before_request : 在 request 请求之前执行 , 在此处添加数据库连接操作
+@app.teardown_request :在视图函数执行结束后,执行改段代码,在此处关闭数据库连接
+@app.before_request
+def connect_db():
+app.app_ctx_globals_class.conn = MySQLdb.connect(host='localhost',user='root',passwd='',db='blog')
+app.app_ctx_globals_class.cur = app.app_ctx_globals_class.conn.cursor()
+@app.teardown_request
+def close_db(*args):
+# 该函数需要接受一个参数,为当前刚结束的请求的 request
+if hasattr( app.app_ctx_globals_class,'cur'):
+app.app_ctx_globals_class.cur.close()
+if hasattr( app.app_ctx_globals_class,'conn'):
+app.app_ctx_globals_class.conn.close()
+app.app_ctx_globals_class 为 flask app 中一个全局的对象。添加了上边两个函数,其他视图函数中的数据库连接和数据库关闭操作都可以删除掉了。
+到目前为止,所有的 SQL 语句都是硬编码写的,非常不友好。下边使用 flask-SQLAlchemy ORM-- 对象关系映射
+安装:
+[root@walter web]# easy_install flask-SQLAlchemy
+在 app.py 中引入模块 :
+from flask.ext.sqlalchemy import SQLAlchemy
+使用 ORM 连接数据库:SQLALCHEMY_DATABASE_URI="mysql+pymysql://root:<a href="https://github.com/localhost" class="user-mention">@localhost</a>:3306/blog"
+# 格式: mysql+pymysql://USERNAME:PASSWD@HOST:PORT/DBNAME
+app.config.from_object(<strong>name</strong>)# 从当前模块中导入数据库配置 URI
+db = SQLAlchemy(app)# 实例化一个数据库对象
+# 定义一个 model
+class Post(db.Model):
+<strong>tablename</strong> = 'posts'
+id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+title = db.Column(db.String(45),unique=True,nullable=False)
+content = db.Column(db.Text,nullable=True)
+# 修改所有的视图函数,主要修改操作数据库的代码
+app.route('/')
+def index():
+posts = Post.query.all()
+return render_template('index.html',posts=posts)
+@app.route('/detail/int:p_id')
+def detail(p_id):
+post = Post.query.filter_by(id=p_id).first()
+return render_template('detail.html',post=post)
+@app.route('/add',methods=['GET','POST'])
+def add_entry():
+if request.method == 'GET':
+return render_template('add_entry.html')
+if request.method == 'POST':
+title = request.form.get('title')
+content = request.form.get('content')
+post = Post()
+post.title = title
+post.content = content
+db.session.add(post)
+try:
+db.session.commit()
+except Exception,e:
+db.session.rollback()
+return redirect(url_for('index'))
+# 跳转到首页 ,from flask import redirect,url_for
+相应的模板函数,也要修改,因为这次传递给模板的变量是一个对象:
+[root@walter web]# cat templates/index.html
+&lt;!DOCTYPE html&gt;
+
+
+
+MyBlog
+
+
+<ul>
+&lt;!--jinja2 模板语法 --&gt;
+{% for post in posts %}
+<li><a href="%7B%7B%20url_for(">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
+
+
+[root@walter web]# cat templates/detail.html
+&lt;!DOCTYPE html&gt;
+
+
+
+{{ post.title }}
+
+
+<h2>
+<a id="-posttitle-" class="anchor" href="#-posttitle-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>{{ post.title }}</h2>
+<hr>
+<p>
+{{ post.content }}
+</p>
+
+完整的代码:
+[root@walter web]# cat app.py
+<strong>author</strong> = 'liuzhenwei'
+from flask import Flask,request,render_template,redirect,url_for
+from flask.ext.sqlalchemy import SQLAlchemy
+import sys
+app = Flask(<strong>name</strong>)
+app.debug = True
+SQLALCHEMY_DATABASE_URI="mysql://root:<a href="https://github.com/localhost" class="user-mention">@localhost</a>:3306/blog"
+app.config.from_object(<strong>name</strong>)
+db = SQLAlchemy(app)
+class Post(db.Model):
+<strong>tablename</strong> = 'posts'
+id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+title = db.Column(db.String(45),unique=True,nullable=False)
+content = db.Column(db.Text,nullable=True)
+@app.route('/')
+def index():
+posts = Post.query.all()
+return render_template('index.html',posts=posts)
+@app.route('/detail/int:p_id')
+def detail(p_id):
+post = Post.query.filter_by(id=p_id).first()
+return render_template('detail.html',post=post)
+@app.route('/add',methods=['GET','POST'])
+def add_entry():
+if request.method == 'GET':
+return render_template('add_entry.html')
+if request.method == 'POST':
+title = request.form.get('title')
+content = request.form.get('content')
+post = Post()
+post.title = title
+post.content = content
+db.session.add(post)
+try:
+db.session.commit()
+except Exception,e:
+db.session.rollback()
+return redirect(url_for('index'))
+if <strong>name</strong> == '<strong>main</strong>':
+# 第一次运行此程序的时候需要创建表,使用上边的 db 对象即可,可以根据定义好的每个 model 类,创建相应的表
+if len(sys.argv)&gt;=2 and sys.argv[1]=='setup':
+db.create_all()
+sys.exit(0)
+#drop 所有的表
+if len(sys.argv)&gt;=2 and sys.argv[1]=='drop':
+db.drop_all()
+sys.exit(0)
+app.run('0.0.0.0')</li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/GYgavin/python">Python</a> is maintained by <a href="https://github.com/GYgavin">GYgavin</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
